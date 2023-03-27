@@ -26,7 +26,7 @@ function Signup() {
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({idcitoyen:'00005', mail : mail, telephone: telephone, mdp:mdp})
+            body: JSON.stringify({mail : mail, telephone: telephone, mdp:mdp})
           })
           .then(res => {
            

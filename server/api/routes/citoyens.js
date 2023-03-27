@@ -6,6 +6,7 @@ require('dotenv').config()
 const { v4: uuidv4 } = require('uuid')
 const pool = require('../../pg');
 const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
 router.get('/', async(req, res) => {
     const citizens = await pool.query('SELECT * FROM citoyen')
     console.log(citizens.rows);
@@ -38,7 +39,7 @@ router.post('/signup', async(req, res)=>{
                     error:  err
                 });
             } else { 
-            resultat= await pool.query('insert into citoyen(idcitoyen, mail, telephone, mdp) values($1, $2, $3, $4)', [req.body.idcitoyen, req.body.mail, req.body.telephone, hash]);
+            resultat= await pool.query('insert into citoyen(idcitoyen, mail, telephone, mdp) values($1, $2, $3, $4)', [new mongoose.Types.ObjectId(), req.body.mail, req.body.telephone, hash]);
             res.status(201).json({message: "Utilisateur créé avec succès"});
             console.log(resultat);
             console.log("c bon");
@@ -55,4 +56,49 @@ router.post('/signup', async(req, res)=>{
     //const supression = await pool.query('select * from citoyen, publication, position WHERE citoyen.idcitoyen=publication.idcitoyen and publication.idpublication=position.idpublication and citoyen.idcitoyen= $1', [req.params.idcitoyen]);
     //res.json(supression)
 //})
+router.post("/login", async(req, res) => {
+    const exist = await pool.query('select * from citoyen WHERE mail =$1', [req.body.mail]).catch(err => {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+    });
+    console.log(exist);
+    if (exist.rowCount < 1) {
+        return res.status(401).json({
+            message: "Échec de l'authentification"
+        });
+    }
+    else{
+    bcrypt.compare(req.body.mdp, exist.rows[0].mdp, (err, result) => {
+        if (err) {
+            return res.status(401).json({
+                message: "Échec de l'authentification"
+            });
+        }
+        if (result) {
+            
+            const token = jwt.sign(
+                {
+                    mail: exist.rows[0].mail,
+                    idcitoyen: exist.rows[0].idcitoyen
+                },
+                process.env.JWT_KEY,
+                {
+                    expiresIn: "1h"
+                }
+            );
+            return res.status(200).json({
+                message: "Accès réussi",
+                token: token, 
+                idcitoyen: exist.rows[0].idcitoyen
+            });
+        }
+        res.status(401).json({
+            message: "Échec de l'authentification"
+        });
+    });
+}   
+});
+
 module.exports = router;
