@@ -27,7 +27,7 @@ function Myprofile() {
                     <SafeAreaView style={styles.groupe13}>
                         <Image style={styles.masqueImage} source={require('../../assets/nb.jpg')}/>
                         
-                            <Text style={styles.name}>{backendData[0].prenom} {backendData[0].nom}</Text>
+                            <Text style={styles.name}>Boutheyna NOURI</Text>
                         
                         
                     </SafeAreaView>

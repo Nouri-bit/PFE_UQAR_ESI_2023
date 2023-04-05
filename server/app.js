@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const Pool = require('pg').Pool
 require('dotenv').config()
 const { v4: uuidv4 } = require('uuid')
-mongoose.connect('mongodb://127.0.0.1:27017/PFE_DB');
+mongoose.connect('mongodb+srv://'+process.env.MONGO_USERNAME+':'+process.env.MONGO_PW+'@pfemongodb.xni5toy.mongodb.net/?retryWrites=true&w=majority')
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -27,6 +27,8 @@ mongoose.Promise=global.Promise;
 
 const RoutesCitoyens = require('./api/routes/citoyens');
 app.use('/citoyens',RoutesCitoyens);
+const RoutesPublications = require('./api/routes/publications');
+app.use('/posts',RoutesPublications);
 app.use((req,res,next)=>{
   const err= new Error('Error found');
   err.status=404;

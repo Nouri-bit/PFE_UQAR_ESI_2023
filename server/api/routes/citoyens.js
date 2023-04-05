@@ -27,7 +27,7 @@ router.patch('/:idcitoyen', async(req, res) =>{
 router.post('/signup', async(req, res)=>{
      const exist = await pool.query('select * from citoyen WHERE mail =$1', [req.body.mail])
      if (exist.rowCount >= 1) {
-        console.log("existe");
+        console.log(res);
         return res.status(409).json({
             message: "Ce Mail existe déja ! "
         });
@@ -39,10 +39,10 @@ router.post('/signup', async(req, res)=>{
                     error:  err
                 });
             } else { 
-            resultat= await pool.query('insert into citoyen(idcitoyen, mail, telephone, mdp) values($1, $2, $3, $4)', [new mongoose.Types.ObjectId(), req.body.mail, req.body.telephone, hash]);
+            resultat= await pool.query('insert into citoyen(idcitoyen,nom, prenom,  mail, telephone, mdp) values($1, $2, $3, $4, $5, $6)', [new mongoose.Types.ObjectId(),req.body.nom, req.body.prenom, req.body.mail, req.body.telephone, hash]);
             res.status(201).json({message: "Utilisateur créé avec succès"});
             console.log(resultat);
-            console.log("c bon");
+            //console.log(res);
         }})
             
                 

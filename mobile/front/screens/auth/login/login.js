@@ -1,58 +1,48 @@
 import React, {useState, useEffect, Component} from 'react';
-import { View, StyleSheet, Text, SafeAreaView, TextInput, TouchableOpacity, ScrollView} from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, TextInput, TouchableOpacity} from 'react-native';
 import colors from '../../../config/colors';
 import Checkbox from 'expo-checkbox';
 import { Button } from 'react-native';
 import { Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-function Signup({navigation}) {
+
+  
+function Login({navigation}) {
     const [isChecked, setChecked] = useState(false);
     const [isSelected, setSelection] = useState(false);
-    const [backendData, setBackendData]=useState({})
+    
+    var [backendData, setBackendData]=useState({})
+        //setBackendData(backendData=null);
   Press=() =>{
     Alert.alert('Success');
    }
     const [Email, setMail] = useState("");
     const [Mdp, setMdp] = useState("");
-    const [Telephone, setTelephone] = useState("");
-    const [Nom, setNom] = useState("");
-    const [Prenom, setPrenom] = useState("");
-   let TEST = (nom, prenom, mail, telephone, mdp)=> {
-    const R = {idcitoyen:'00005', mail : mail,telephone: telephone, mdp:mdp};
+   let TEST = (mail,  mdp)=> {
+    //const R = {idcitoyen:'00005', mail : mail,telephone: telephone, mdp:mdp};
    
-           resultat= fetch("http://192.168.1.7:5000/citoyens/signup", {
+           resultat= fetch("http://192.168.1.7:5000/citoyens/login", {
             method: "POST",
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({nom: nom, prenom:prenom, mail : mail, telephone: telephone, mdp:mdp})
+            body: JSON.stringify({mail : mail, mdp:mdp})
           })
-          .then((res, data) => {
-            affichage = res.json("message");
-            //console.log(affichage);
-            if(backendData==={}){
-
-                Alert.alert("Utilisateur créé avec succès");
-            }
-            else{
-                Alert.alert(backendData.message);
-            }
-            setBackendData(data); 
-            //console.log(data);
-              console.log(backendData);
-            return affichage;
-          }).then(
+          .then( response => response.json()).then(
             data => {
-                
-              setBackendData(data);
-            
-              //console.log(backendData);
+              setBackendData(data); 
+               
+                if(backendData.message==="Accès réussi"){ navigation.navigate("Home");}
+               
+               
+              
+              console.log(backendData);
             }
           )
           .then(
             (result) => {
-              //console.log(result);
+              console.log(result);
             },
             (error) => {
                 
@@ -63,32 +53,13 @@ function Signup({navigation}) {
 
    }
     return (
-     
         <View style={styles.background}>
-         <Text style={styles.compte}>Créer un compte</Text>
-         <ScrollView contentContainerStyle={styles.rectangle27}>
-         <SafeAreaView style={styles.groupe32}>
-            <Text style={styles.subtitle}>Nom</Text>
-            <SafeAreaView style={styles.group7}>
-            <TextInput style={styles.inputstyle} value={Nom} onChangeText={(text) => setNom(text)} keyboardType="default" enterKeyHint="done" placeholder="Entrez Votre Nom" />
-            </SafeAreaView>
-        </SafeAreaView> 
+         <Text style={styles.compte}>Se Connecter</Text>
+         
         <SafeAreaView style={styles.groupe32}>
-            <Text style={styles.subtitle}>Prénom</Text>
+            <Text style={styles.subtitle}>Email</Text>
             <SafeAreaView style={styles.group7}>
-            <TextInput style={styles.inputstyle} value={Prenom} onChangeText={(text) => setPrenom(text)} keyboardType="default" enterKeyHint="done" placeholder="Entrez Votre Prénom" />
-            </SafeAreaView>
-        </SafeAreaView> 
-        <SafeAreaView style={styles.groupe32}>
-            <Text style={styles.subtitle}>Adresse Email</Text>
-            <SafeAreaView style={styles.group7}>
-            <TextInput style={styles.inputstyle} value={Email} onChangeText={(text) => setMail(text)} keyboardType="email-address" enterKeyHint="done" placeholder="Entrez Votre Email" />
-            </SafeAreaView>
-        </SafeAreaView>
-        <SafeAreaView style={styles.groupe32}>
-        <Text style={styles.subtitle}>Numéro de Téléphone</Text>
-            <SafeAreaView style={styles.group7}>
-            <TextInput style={styles.inputstyle} value={Telephone} onChangeText={(text) => setTelephone(text)} keyboardType="phone-pad" enterKeyHint="done" placeholder="Entrez Votre Numéro de Téléphone"  />
+            <TextInput style={styles.inputstyle}  value={Email} onChangeText={(text) => setMail(text)} keyboardType="email-address" enterKeyHint="done" placeholder="test@gmail.com" />
             </SafeAreaView>
         </SafeAreaView>
         <SafeAreaView style={styles.groupe32}>
@@ -98,11 +69,6 @@ function Signup({navigation}) {
         </SafeAreaView>
          </SafeAreaView>
          <SafeAreaView style={styles.groupe32}>
-        <Text style={styles.subtitle}>Confirmer Votre Mot de Passe</Text>
-            <SafeAreaView style={styles.group7}>
-            <TextInput  placeholder="Veuillez Confirmer Votre Mot de Passe" style={styles.inputstyle}  enterKeyHint="done"  secureTextEntry={true} />
-        </SafeAreaView>
-         </SafeAreaView>
          <SafeAreaView style={styles.groupe33}>
         <Checkbox
           style={styles.checkbox}
@@ -110,21 +76,20 @@ function Signup({navigation}) {
           onValueChange={setChecked}
           color={isChecked ? colors.black : undefined}
         />
-        <Text style={styles.subtitle2}>Reppelez-Vous de Moi</Text>
+        <Text style={styles.subtitle}>Reppelez-Vous de Moi</Text>
+        </SafeAreaView>
         </SafeAreaView>
         <SafeAreaView style={styles.groupe32}>
         <SafeAreaView style={styles.group8}>
-            <Button onPress={()=>TEST(Nom, Prenom, Email, Telephone, Mdp)} color={colors.white}  title="S'inscrire"/>
+            <Button onPress={()=>TEST(Email,Mdp)} color={colors.white}  title="Se connecter"/>
            </SafeAreaView>
         </SafeAreaView>
         <SafeAreaView style={styles.groupe32}>
         <SafeAreaView style={styles.connection}>
-            <Text style={styles.subtitle1}>Vous avez déjà un compte? </Text>
-            <Button onPress={() => navigation.navigate("Login")} title='Se connecter' color={colors.primary} style={styles.bouton}/>
+            <Text style={styles.subtitle1}>Vous n'avez pas de compte? </Text>
+            <Button onPress={() => navigation.navigate("Details")} title="S'inscrire" color={colors.black} style={styles.bouton}/>
         </SafeAreaView>
         </SafeAreaView>
-       
-        </ScrollView>
         </View>
       
     );
@@ -132,16 +97,14 @@ function Signup({navigation}) {
 
 const styles=StyleSheet.create({
     subtitle1:{fontSize:17,
-        color:colors.secondary, 
+        color:colors.white, 
         alignSelf:'center'
         
     },
     connection:{
-        flexDirection:'row',
-        top:'15%'
-        
-        
-       
+        flexDirection:'row', 
+        marginTop:80, 
+        gap:17, 
     },
     checkboxContainer: {
         flexDirection: 'row',
@@ -169,9 +132,6 @@ const styles=StyleSheet.create({
     subtitle:{
         fontSize:17,
     },
-    subtitle2:{
-        fontSize:15,
-    },
     background:{
         flex:1,
        backgroundColor:  colors.primary
@@ -180,10 +140,10 @@ const styles=StyleSheet.create({
         backgroundColor:colors.white,
         borderRadius:16,
         shadowColor:"#4b4b26",
-        height:'130%',
+        height:'100%',
         alignSelf:'center',
         position:'absolute',
-        
+        top:85,
         width:'97%'
     },
     compte: {
@@ -206,16 +166,14 @@ const styles=StyleSheet.create({
         flexDirection:'column',  
         left:30, 
         position:'relative', 
-        top:'5%',
-        marginTop:20, 
+        top:'30%',
+        marginTop:15, 
     }, 
     groupe33:{
         display:"flex",
         flexDirection:'row',  
-        left:30, 
         position:'relative', 
-        top:'10%', 
-        marginTop:17
+        marginTop:15, 
     },
     group7:{
         alignContent:'flex-start', 
@@ -224,7 +182,7 @@ const styles=StyleSheet.create({
         height:50, 
         right:19,
         top:7,
-        backgroundColor:colors.secondary,
+        backgroundColor:colors.white,
         width:'95%'
     },
     group8:{
@@ -234,9 +192,9 @@ const styles=StyleSheet.create({
         display:'flex', 
         height:40, 
         right:20,
-        top:7,
-        backgroundColor:colors.primary,
-        width:'26%'
+        top:15,
+        backgroundColor:colors.black,
+        width:'30%'
     }, 
     inputstyle:{
         color:colors.black,
@@ -246,4 +204,6 @@ const styles=StyleSheet.create({
         fontSize:17,
     }
 });
-export default Signup;
+const Stack = createNativeStackNavigator();
+
+export default Login;
