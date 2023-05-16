@@ -29,6 +29,12 @@ const RoutesCitoyens = require('./api/routes/citoyens');
 app.use('/citoyens',RoutesCitoyens);
 const RoutesPublications = require('./api/routes/publications');
 app.use('/posts',RoutesPublications);
+const RoutesDeclarations = require('./api/routes/declarations');
+app.use('/declarations',RoutesDeclarations);
+const RoutesSondages = require('./api/routes/sondages');
+app.use('/sondages',RoutesSondages);
+const RoutesForms = require('./api/routes/forms');
+app.use('/forms',RoutesForms);
 app.use((req,res,next)=>{
   const err= new Error('Error found');
   err.status=404;

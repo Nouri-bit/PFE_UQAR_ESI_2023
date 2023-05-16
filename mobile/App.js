@@ -8,10 +8,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Posts from './front/screens/profile/posts';
 import Newpost from './front/screens/profile/newpost';
+import NavBar from './front/screens/NavBar';
+import Navi from './front/navigation/navi';
+import Formulaire from './front/screens/profile/formulaire';
+import Restesignup from './front/screens/auth/signup/restesignup';
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
-     <Newpost/> 
+<Navi/>
   );
   }
 

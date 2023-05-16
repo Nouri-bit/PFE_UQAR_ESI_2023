@@ -1,12 +1,18 @@
 import React from 'react';
-import { Image, Text, View, StyleSheet, SafeAreaView, Button, Alert, Icon } from 'react-native';
+import { Image, Text, View, StyleSheet, SafeAreaView, Button, Alert, Icon, Pressable } from 'react-native';
 import colors from '../../config/colors';
 import {useEffect, useState} from 'react';
 
-function Myprofile() {
+function Myprofile({navigation,route}) {
+    
+    console.log(route)
     const [backendData, setBackendData]=useState([{}])
   useEffect (()=>{
-    fetch("http://192.168.1.7:5000/citoyens/00003/").then(
+   resultat= fetch("http://192.168.1.7:5000/citoyens/"+route.params.id, {
+    headers:{
+        'Authorization':'Bearer '+route.params.TOKEN
+    }
+   }).then(
       response => response.json()
     ).then(
       data => {
@@ -27,7 +33,7 @@ function Myprofile() {
                     <SafeAreaView style={styles.groupe13}>
                         <Image style={styles.masqueImage} source={require('../../assets/nb.jpg')}/>
                         
-                            <Text style={styles.name}>Boutheyna NOURI</Text>
+                            <Text style={styles.name}>{backendData.nom} {backendData.prenom}</Text>
                         
                         
                     </SafeAreaView>
@@ -35,10 +41,12 @@ function Myprofile() {
                     <SafeAreaView style={styles.groupe32}>
                      <Text style={styles.subtitle1}>Paramètres du compte</Text>
                      <SafeAreaView style={styles.groupe31}>
-                        <Text style={styles.subtitle}>Modifier le profile</Text>
+                        <Text style={styles.subtitle}>Modifier le profil</Text>
                      </SafeAreaView>
                      <SafeAreaView style={styles.groupe31}>
-                        <Text style={styles.subtitle}>Changer le mot de passe</Text>
+                        <Pressable onPress={()=> navigation.navigate("Home", {screen: "newpost", params: {id:route.params.id, TOKEN:route.params.TOKEN}})}>
+                        <Text style={styles.subtitle}>Créer une publication</Text>
+                        </Pressable>
                      </SafeAreaView>
                      <SafeAreaView style={styles.groupe31}>
                         <Text style={styles.subtitle}>Poussez les notifications</Text>
@@ -57,6 +65,11 @@ function Myprofile() {
                      </SafeAreaView>
                      <SafeAreaView style={styles.groupe31}>
                         <Text style={styles.subtitle}>Termes et conditions</Text>
+                     </SafeAreaView>
+                     <SafeAreaView style={styles.groupe31}>
+                        <Pressable onPress={()=>navigation.navigate("Login")}>
+                        <Text style={styles.subtitle}>Se déconnecter</Text>
+                        </Pressable>
                      </SafeAreaView>
                     </SafeAreaView>
                 </SafeAreaView>

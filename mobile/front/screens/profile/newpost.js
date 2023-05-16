@@ -6,16 +6,21 @@ import Checkbox from 'expo-checkbox';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { Button } from 'react-native';
-import RNFetchBlob from "rn-fetch-blob";
+//import RNFetchBlob from "rn-fetch-blob";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
-function Newpost() {
+function Newpost({navigation, route}) {
+  console.log(route)
     const [Problèmes, setChecked] = useState(false);
     const [Suggestions, setCheckedS] = useState(false);
     const [Compliments, setCheckedC] = useState(false);
     const [Expériences, setCheckedE] = useState(false);
     const [Contenu, setContenu] = useState("");
-    
+    const [names, setNames] = useState([]);
+    var TYPE=[];
+    const handleClick = (valeur) => {
+      setNames(current => [...current,valeur]);
+    };
 
 const [images, setimages] = useState(null);
 const [camera, setcamera] = useState(null);
@@ -55,36 +60,44 @@ if (permission.status !== 'granted') {
 }
   
 }
-  var [backendData, setBackendData]=useState({})
+  //var [backendData, setBackendData]=useState({})
+  var backendData= {}
   let TEST = (contenu, image)=> {
     const R = {contenu:contenu, images : image};
    console.log(R);
-   if (Platform.OS === 'ios') {
-    let arr = image.split('/')
-    console.log(arr)
-    const dirr = RNFetchBlob.fs.dirs
-    filePath = `${dirr.DocumentDir}/${arr[arr.length - 1]}`
-    console.log(filePath)
-  } else {
-    filePath = image
-  } 
-  RNFetchBlob.fs.readFile(filePath, 'base64')
-  .then((data) => {
-    console.log(data)
-  })
+     if(Problèmes===true){
+      //handleClick("Problèmes")
+       TYPE=[...TYPE,"Problèmes"]
+     }
+     if(Suggestions===true){
+      //handleClick("Suggestions")
+        TYPE=[...TYPE, "Suggestions"]
+     }
+     if(Expériences===true){
+      //handleClick("Expériences")
+      TYPE=[...TYPE,"Expériences"]
+     }
+     if(Compliments===true){
+      //handleClick("Compliments")
+      TYPE=[...TYPE,"Compliments"]
+     }
+    //  console.log("here we go "+TYPE)
    
-   
-           resultat= fetch("http://192.168.1.7:5000/posts/00002", {
+           resultat= fetch("http://192.168.1.7:5000/posts/"+route.params.id, {
             method: "POST",
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({contenu : contenu, images :image})
+            body: JSON.stringify({contenu : contenu, typepost:TYPE})
           })
           .then( response => response.json()).then(
             data => {
-              setBackendData(data); 
+              //setBackendData(data); 
+              backendData= {...backendData, data}
               console.log(backendData);
+              if(backendData.data.message==="Post a été crée avec succès"){
+              navigation.navigate("All", {id:route.params.id, TOKEN:route.params.TOKEN})
+              }
             }
           )
           .then(

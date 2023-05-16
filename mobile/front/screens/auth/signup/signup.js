@@ -4,12 +4,12 @@ import colors from '../../../config/colors';
 import Checkbox from 'expo-checkbox';
 import { Button } from 'react-native';
 import { Alert } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-function Signup({navigation}) {
+import Animated from 'react-native-reanimated';
+function Signup({navigation, route}) {
     const [isChecked, setChecked] = useState(false);
     const [isSelected, setSelection] = useState(false);
-    const [backendData, setBackendData]=useState({})
+   //const [backendData, setBackendData]=useState({})
+   var backendData={};
   Press=() =>{
     Alert.alert('Success');
    }
@@ -18,50 +18,36 @@ function Signup({navigation}) {
     const [Telephone, setTelephone] = useState("");
     const [Nom, setNom] = useState("");
     const [Prenom, setPrenom] = useState("");
-   let TEST = (nom, prenom, mail, telephone, mdp)=> {
-    const R = {idcitoyen:'00005', mail : mail,telephone: telephone, mdp:mdp};
-   
-           resultat= fetch("http://192.168.1.7:5000/citoyens/signup", {
+    let Like= (nom, prenom, mail, telephone, mdp)=>{
+       
+        resultat= fetch("http://192.168.1.7:5000/citoyens/signup", {
             method: "POST",
             headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({nom: nom, prenom:prenom, mail : mail, telephone: telephone, mdp:mdp})
+                "Content-Type": "application/json"
+                },
+                body: JSON.stringify({nom: nom, prenom:prenom, mail : mail, telephone: telephone, mdp:mdp})
           })
-          .then((res, data) => {
-            affichage = res.json("message");
-            //console.log(affichage);
-            if(backendData==={}){
-
-                Alert.alert("Utilisateur créé avec succès");
-            }
-            else{
-                Alert.alert(backendData.message);
-            }
-            setBackendData(data); 
-            //console.log(data);
-              console.log(backendData);
-            return affichage;
-          }).then(
+          .then( response => response.json()).then(
             data => {
-                
-              setBackendData(data);
-            
-              //console.log(backendData);
+             
+                backendData={...backendData, data}
+              console.log(backendData.data) 
+              if(backendData.data.message==="Utilisateur créé avec succès"){
+               navigation.navigate("Reste",{Email: Email})
+               // Alert.alert("Utilisateur créé avec succès");
+            }
             }
           )
           .then(
             (result) => {
-              //console.log(result);
+              console.log(result);
             },
             (error) => {
-                
               console.log(error);
             });
-            console.log('--------------------');
           
-
-   }
+      console.log(resultat)
+    }
     return (
      
         <View style={styles.background}>
@@ -114,7 +100,7 @@ function Signup({navigation}) {
         </SafeAreaView>
         <SafeAreaView style={styles.groupe32}>
         <SafeAreaView style={styles.group8}>
-            <Button onPress={()=>TEST(Nom, Prenom, Email, Telephone, Mdp)} color={colors.white}  title="S'inscrire"/>
+            <Button onPress={()=>Like(Nom, Prenom, Email, Telephone, Mdp)} color={colors.white}  title="S'inscrire"/>
            </SafeAreaView>
         </SafeAreaView>
         <SafeAreaView style={styles.groupe32}>

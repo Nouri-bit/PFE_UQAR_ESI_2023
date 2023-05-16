@@ -4,24 +4,54 @@ import colors from '../../../config/colors';
 import Checkbox from 'expo-checkbox';
 import { Button } from 'react-native';
 import { Alert } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import Animated from 'react-native-reanimated';
   
 function Login({navigation}) {
     const [isChecked, setChecked] = useState(false);
     const [isSelected, setSelection] = useState(false);
     
-    var [backendData, setBackendData]=useState({})
+    //var [backendData, setBackendData]=useState({})
+    var backendData = {}
         //setBackendData(backendData=null);
   Press=() =>{
     Alert.alert('Success');
    }
     const [Email, setMail] = useState("");
     const [Mdp, setMdp] = useState("");
+    let Like= (mail, mdp)=>{
+       
+      resultat= fetch("http://192.168.1.7:5000/citoyens/login", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+              },
+              body: JSON.stringify({mail : mail, mdp:mdp}) 
+        })
+        .then( response => response.json()).then(
+          data => {
+           
+           
+            backendData={...backendData, data}
+            if(backendData.data.message==="Accès réussi"){ 
+              //console.log("c boooooooooooon")
+              navigation.navigate("NavBar",{screen:"Profile",  params:{ id:backendData.data.idcitoyen, TOKEN:backendData.data.token}})
+              }
+          }
+        )
+        .then(
+          (result) => {
+            console.log(result);
+          },
+          (error) => {
+            console.log(error);
+          });
+        
+    console.log(resultat)
+  }
    let TEST = (mail,  mdp)=> {
     //const R = {idcitoyen:'00005', mail : mail,telephone: telephone, mdp:mdp};
-   
+    
            resultat= fetch("http://192.168.1.7:5000/citoyens/login", {
             method: "POST",
             headers: {
@@ -31,10 +61,15 @@ function Login({navigation}) {
           })
           .then( response => response.json()).then(
             data => {
-              setBackendData(data); 
-               
-                if(backendData.message==="Accès réussi"){ navigation.navigate("Home");}
-               
+              //setBackendData(data); 
+              backendData={...backendData, data}
+              //console.log(backendData.token)
+              //console.log(backendData.idcitoyen)
+                if(backendData.data.message==="Accès réussi"){ 
+                  //console.log("c boooooooooooon")
+                  navigation.navigate("NavBar", {screen: "Profile" ,  params:{ id:backendData.idcitoyen, TOKEN:backendData.token}})
+                  }
+                  
                
               
               console.log(backendData);
@@ -81,7 +116,7 @@ function Login({navigation}) {
         </SafeAreaView>
         <SafeAreaView style={styles.groupe32}>
         <SafeAreaView style={styles.group8}>
-            <Button onPress={()=>TEST(Email,Mdp)} color={colors.white}  title="Se connecter"/>
+            <Button onPress={()=>Like(Email,Mdp) } color={colors.white}  title="Se connecter"/>
            </SafeAreaView>
         </SafeAreaView>
         <SafeAreaView style={styles.groupe32}>
@@ -94,7 +129,6 @@ function Login({navigation}) {
       
     );
 }
-
 const styles=StyleSheet.create({
     subtitle1:{fontSize:17,
         color:colors.white, 
@@ -204,6 +238,5 @@ const styles=StyleSheet.create({
         fontSize:17,
     }
 });
-const Stack = createNativeStackNavigator();
 
 export default Login;

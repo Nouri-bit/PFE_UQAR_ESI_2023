@@ -1,19 +1,20 @@
 const mongoose = require('mongoose');
 const PublicationSchema = mongoose.Schema({
     _id:mongoose.Schema.Types.ObjectId, 
-    contenu:String, 
+    contenu:{type: String, required: true}, 
     like: [],
     dislike: [], 
-    typepost: String,
-    commentaires: [ [] ],
-    feedbacks: [ [] ],
-    datepost: String,
-    userId: String,
-    position: String,
-    semantique: String,
-    spatial: String,
-    temporel: String,
+    typepost: {type: [], required: true},
+    commentaires: [],
+    feedbacks: [],
+    datepost: {type: Date, required: true},
+    userId: {type: String, required: true},
+    position: [],
+    semantique: [],
+    spatial: [],
+    temporel: [],
     images: [],
-    locstamp: String
+    locstamp: String,
+    etat: {type: Boolean, required: true}
 });
 module.exports= mongoose.model('Publication', PublicationSchema);

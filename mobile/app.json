@@ -4,12 +4,11 @@
     "slug": "mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./front/assets/icon.png",
+    "icon": "./front/assets/applications.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./front/assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#54CDEA"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -19,12 +18,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./front/assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./front/assets/applications.png",
+        "backgroundColor": "#54CDEA"
       }
     },
     "web": {
-      "favicon": "./front/assets/favicon.png"
+      "favicon": "./front/assets/applications.png"
     }
   }
 }

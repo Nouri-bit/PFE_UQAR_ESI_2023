@@ -8,7 +8,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs();
-function Posts({navigation, route}) {
+function PosCompliments({navigation, route}) {
 
     console.log(route)
     const [backendData1, setBackendData1]=useState([{}])
@@ -123,7 +123,7 @@ function Posts({navigation, route}) {
               console.log(error);
             });
           
-      //console.log(resultat)
+      console.log(resultat)
     }
     
     const [liked, setLiked] = useState(false);
@@ -140,7 +140,7 @@ function Posts({navigation, route}) {
         setBackendDatadislike(null);
 	}, [])
     useEffect (()=>{
-        resultat= fetch("http://192.168.1.7:5000/posts/général").then(
+        resultat= fetch("http://192.168.1.7:5000/posts/Compliments").then(
            response => response.json()
          ).then(
            data => {
@@ -156,7 +156,7 @@ function Posts({navigation, route}) {
                        
                   setBackendDataP(prenoms)
                 
-                 //console.log(userId, backendDataP, backendDataN)
+                 console.log(userId, backendDataP, backendDataN)
                 
                 }
               )            
@@ -192,7 +192,7 @@ function Posts({navigation, route}) {
           <Text style={styles.subtitle}> Loading ...</Text>
         ) : (
           
-          backendData.posts.map(({_id, contenu, typepost, userId, datepost, like, dislike, commentaires, images}, i)=>
+          backendData.posts.map(({_id, contenu, typepost, userId, datepost, like, dislike, commentaires}, i)=>
           (
             <>
             <View style={styles.rectangle4} key={i}>
@@ -226,8 +226,6 @@ function Posts({navigation, route}) {
         
                     
             <Text style={styles.subtitle1} >{contenu}</Text>
-            
-            
  
     <SafeAreaView style={styles.groupe30}>
       <SafeAreaView style={styles.groupe16}>
@@ -520,4 +518,5 @@ const styles= StyleSheet.create({
         
     }
 });
-export default Posts;
+
+export default PosCompliments;
