@@ -83,7 +83,7 @@ if (permission.status !== 'granted') {
      }
     //  console.log("here we go "+TYPE)
    
-           resultat= fetch("http://192.168.1.7:5000/posts/"+route.params.id, {
+           resultat= fetch("http://192.168.1.7:5000/posts/"+route.params.tous.id, {
             method: "POST",
             headers: {
               'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ if (permission.status !== 'granted') {
               backendData= {...backendData, data}
               console.log(backendData);
               if(backendData.data.message==="Post a été crée avec succès"){
-              navigation.navigate("All", {id:route.params.id, TOKEN:route.params.TOKEN})
+              navigation.navigate("All")
               }
             }
           )

@@ -24,7 +24,7 @@ const OpenURLButton = ({url, children}) => {
     return <Button color={colors.primary} title={children} onPress={handlePress} />;
   };
 function Forms({navigation, route}) {
-
+console.log(route.params.tous)
   const [backendData, setBackendData]=useState([{}])
   const [Pour, setChecked1] = useState(false);
     const [Contre, setChecked2] = useState(false);

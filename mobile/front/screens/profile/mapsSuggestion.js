@@ -8,30 +8,24 @@ import { AntDesign } from '@expo/vector-icons';
 import MapView from 'react-native-maps';
 import { LogBox } from 'react-native';
 import { Marker } from "react-native-maps";
-import CalendarPicker from 'react-native-calendar-picker';
-function Maps({navigation, route}) {
-    console.log(route.params.DateD.toISOString())
-    var dateD = new Date().getDay; 
-    //console.log(new Date()< route.params.DateD)
-    //console.log(route.params.DateF)
-    const debut= route.params.DateF; 
+function MapsSuggestion({navigation, route}) {
     Press=() =>{
         Alert.alert('Success');
        }
    const [backendData, setBackendData]=useState([{}])
  // var  backendData= {}
-
- const [dateN, setdateN] = useState('17-05-2023');
     useEffect (()=>{
-        resultat= fetch("http://192.168.1.7:5000/posts/général").then(
+        resultat= fetch("http://192.168.1.7:5000/posts/Suggestions").then(
            response => response.json()
          ).then(
            data => {
              setBackendData(data)
+             //backendData= {...backendData, data}
+             console.log(backendData.count)
            }
          )
        }, [])
-    return (
+       return (
         <View style={styles.background}>
         <Text style={styles.compte}>Carte géographique</Text>
         <View style={styles.rectangle3}>
@@ -277,4 +271,4 @@ const styles= StyleSheet.create({
         
     }
 });
-export default Maps;
+export default MapsSuggestion;

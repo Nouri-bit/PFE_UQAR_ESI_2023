@@ -17,20 +17,20 @@ import PosExperiences from '../screens/profile/PosExperiences';
 import Comment from '../screens/profile/comment';
 import Feed from '../screens/profile/Feed';
 import Newpost from '../screens/profile/newpost';
-function NavHome() {
+function NavHome({route}) {
     const Stack = createNativeStackNavigator();
-    
-  
+    //console.log(route)
+    var id=route.params.tous
     return (
       <Stack.Navigator initialRouteName='All'  screenOptions={{headerShown:false}}>
-        <Stack.Screen name="All" component={Posts} options={{gestureEnabled: false}}/>
-        <Stack.Screen name="Problèmes" component={PosProblèmes} options={{gestureEnabled: false}}/>
-        <Stack.Screen name="Suggestions" component={PosSuggestions} options={{gestureEnabled: false}}/>
-        <Stack.Screen name="Compliments" component={PosCompliments} options={{gestureEnabled: false}}/>
-        <Stack.Screen name="Expériences" component={PosExperiences} options={{gestureEnabled: false}}/>
-       <Stack.Screen name="commentaires" component={Comment} />
-       <Stack.Screen name="newpost" component={Newpost} />
-        <Stack.Screen name="Feed" component={Feed} />
+        <Stack.Screen name="All" component={Posts} initialParams={{tous:id}} options={{gestureEnabled: false}}/>
+        <Stack.Screen name="Problèmes" component={PosProblèmes} initialParams={{tous:id}} options={{gestureEnabled: false}}/>
+        <Stack.Screen name="Suggestions" component={PosSuggestions} initialParams={{tous:id}} options={{gestureEnabled: false}}/>
+        <Stack.Screen name="Compliments" component={PosCompliments} initialParams={{tous:id}} options={{gestureEnabled: false}}/>
+        <Stack.Screen name="Expériences" component={PosExperiences} initialParams={{tous:id}} options={{gestureEnabled: false}}/>
+       <Stack.Screen name="commentaires" initialParams={{tous:id}} component={Comment} />
+       <Stack.Screen name="newpost" initialParams={{tous:id}} component={Newpost} />
+        <Stack.Screen name="Feed" initialParams={{tous:id}} component={Feed} />
       
          </Stack.Navigator>
     );

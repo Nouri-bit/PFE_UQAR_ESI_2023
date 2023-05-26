@@ -9,7 +9,7 @@ import Forms from '../screens/profile/forms';
 import Myprofile from '../screens/profile/myprofile';
 import Newpost from '../screens/profile/newpost';
 function NavProfile({navigation, route}) {
-    console.log(route)
+    //console.log(route)
     const Stack = createNativeStackNavigator();
 
     return (

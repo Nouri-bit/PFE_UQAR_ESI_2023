@@ -82,38 +82,34 @@ router.get("/all", (req, res, next) => {
       res.status(200).json(response);
     })
 });
-router.get("/comments/:id/:uid", (req, res, next) => {
+router.patch("/comments/:id/:uid", (req, res, next) => {
   const id = req.params.id
-  //const choi= req.body.ch
-  
-  Sondage.find({_id: id})
-    .select("choix.ch")
+  const choi= req.body.ch
+  const uid = req.params.uid
+  //var cho="Jardin"
+  Sondage.updateOne({$and: [{_id: id}]}, {$push:{"choix.$[si].users":uid}, $inc:{nombrevotes:1 } }, {"arrayFilters" :[ { "si.ch" :choi} ]})
+    .select("choix")
     .exec()
-    .then(docs => {
-      const response = {
-        count: docs.length,
-        choix: docs
+    .then(result => {
+      res.status(200).json({
+          message: 'choix ajouté',
           
-       
-      };
-      res.status(200).json(response);
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({
-        error: err
       });
-    });
+    }).catch(err => {
+      if(res.status == 404){
+        console.log(err.message)
+      }
+   })
 });
 
 //add un 
 router.patch("/remplir/:id/:uid", (req, res, next) => {
     const id = req.params.id
-    const uid = req.params.fid
+    const uid = req.params.uid
    //const choixx = req.body.ch
     
     //const newremplissag = [uid]
-      Sondage.updateOne({$and: [{_id: id}, {choix: {  $elemMatch: { ch: req.body.ch } }}]}, { $push:{"choix":uid } })
+      Sondage.updateOne({$and: [{_id: id}]}, { $push:{"choix.users":uid } })
       .exec()
       .then(result => {
         res.status(200).json({

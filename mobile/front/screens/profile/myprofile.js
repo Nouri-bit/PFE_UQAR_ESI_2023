@@ -8,9 +8,9 @@ function Myprofile({navigation,route}) {
     console.log(route)
     const [backendData, setBackendData]=useState([{}])
   useEffect (()=>{
-   resultat= fetch("http://192.168.1.7:5000/citoyens/"+route.params.id, {
+   resultat= fetch("http://192.168.1.7:5000/citoyens/"+route.params.tous.id, {
     headers:{
-        'Authorization':'Bearer '+route.params.TOKEN
+        'Authorization':'Bearer '+route.params.tous.TOKEN
     }
    }).then(
       response => response.json()
@@ -31,7 +31,7 @@ function Myprofile({navigation,route}) {
                 <SafeAreaView style={styles.rectangle27}>
                     
                     <SafeAreaView style={styles.groupe13}>
-                        <Image style={styles.masqueImage} source={require('../../assets/nb.jpg')}/>
+                        <Image style={styles.masqueImage} source={require('../../assets/user.png')}/>
                         
                             <Text style={styles.name}>{backendData.nom} {backendData.prenom}</Text>
                         
@@ -44,7 +44,7 @@ function Myprofile({navigation,route}) {
                         <Text style={styles.subtitle}>Modifier le profil</Text>
                      </SafeAreaView>
                      <SafeAreaView style={styles.groupe31}>
-                        <Pressable onPress={()=> navigation.navigate("Home", {screen: "newpost", params: {id:route.params.id, TOKEN:route.params.TOKEN}})}>
+                        <Pressable onPress={()=> navigation.navigate("Home", {screen: "newpost"})}>
                         <Text style={styles.subtitle}>Créer une publication</Text>
                         </Pressable>
                      </SafeAreaView>
@@ -127,9 +127,8 @@ const styles = StyleSheet.create({
         width:'97%'
     }, 
     masqueImage: {
-        height:70,
-        borderRadius:50, 
-        width:70, 
+        height:100, 
+        width:100, 
         marginLeft:'7%', 
 
     }

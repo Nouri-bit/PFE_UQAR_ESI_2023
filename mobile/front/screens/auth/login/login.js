@@ -35,7 +35,7 @@ function Login({navigation}) {
             backendData={...backendData, data}
             if(backendData.data.message==="Accès réussi"){ 
               //console.log("c boooooooooooon")
-              navigation.navigate("NavBar",{screen:"Profile",  params:{ id:backendData.data.idcitoyen, TOKEN:backendData.data.token}})
+              navigation.navigate("NavBar",{screen:"Home",  params:{ id:backendData.data.idcitoyen, TOKEN:backendData.data.token}})
               }
           }
         )

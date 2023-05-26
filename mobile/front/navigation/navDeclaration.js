@@ -9,17 +9,17 @@ import Declarations from '../screens/profile/declarations';
 import TrendDec from '../screens/profile/TrendDec';
 import CommentDec from '../screens/profile/commentDec';
 import FeedDec from '../screens/profile/FeedDec';
-function NavDeclaration() {
+function NavDeclaration({route}) {
     const Stack = createNativeStackNavigator();
-    
-  
+    var id=route.params.tous
+  //console.log(route)
   
     return (
       <Stack.Navigator initialRouteName='all'  screenOptions={{headerShown:false}}>
-        <Stack.Screen name="all" component={Declarations} options={{gestureEnabled: false}}/>
-        <Stack.Screen name="Trend" component={TrendDec} options={{gestureEnabled: false}}/>
-        <Stack.Screen name="commentaire" component={CommentDec} />
-        <Stack.Screen name="Feeds" component={FeedDec} />
+        <Stack.Screen name="all" component={Declarations} initialParams={{tous:id}} options={{gestureEnabled: false}}/>
+        <Stack.Screen name="Trend" component={TrendDec} initialParams={{tous:id}} options={{gestureEnabled: false}}/>
+        <Stack.Screen name="commentaire" initialParams={{tous:id}} component={CommentDec} />
+        <Stack.Screen name="Feeds" initialParams={{tous:id}} component={FeedDec} />
          </Stack.Navigator>
     );
     }

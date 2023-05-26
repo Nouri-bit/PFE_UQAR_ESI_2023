@@ -118,7 +118,7 @@ function Comment({navigateur, route}) {
    
    </SafeAreaView>
     <TextInput style={styles.subtitlen} placeholder="Ajouter un Commentaire" value={Contenu} onChangeText={(text) => setContenu(text)}  enterKeyHint="done" />
-   <Pressable onPress={()=> Commenter(route.params._id, route.params.id, Contenu)}>
+   <Pressable onPress={()=> Commenter(route.params._id, route.params.tous.id, Contenu)}>
    <FontAwesome5 name="comment" size={29} color={colors.secondary}/> 
    </Pressable>
    </SafeAreaView>

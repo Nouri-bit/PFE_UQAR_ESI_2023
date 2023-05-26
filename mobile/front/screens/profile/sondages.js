@@ -1,42 +1,21 @@
 import React, {useState, useEffect} from 'react';
-import { View, StyleSheet, Text, SafeAreaView, ScrollView, Image, Alert} from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, ScrollView, Image, Alert, Button} from 'react-native';
 import colors from '../../config/colors';
 //import Checkbox from 'expo-checkbox';
-import {CheckBox } from 'react-native-elements'; 
+//import {CheckBox } from 'react-native-elements'; 
 import { Pressable } from "react-native";
+import { CheckBox } from '@rneui/themed';
 import {  SimpleLineIcons } from "@expo/vector-icons";
 import { FontAwesome5, AntDesign} from '@expo/vector-icons';
 
 function Sondages({navigation, route}) {
+    const [selectedIndex, setIndex] = React.useState("-1,-1");
   const [backendData, setBackendData]=useState([{}])
-  const [Pour, setChecked1] = useState(false);
-    const [Contre, setChecked2] = useState(false);
-    const [Ch3, setChecked3] = useState(false);
-  
-    
-    const checking = ()=>{
-       
-        setChecked1(true)
-        setChecked2(false)
-        setChecked3(false)
-     }
-     const checking3 = ()=>{
-       
-        setChecked3(true)
-        setChecked2(false)
-        setChecked1(false)
-
-     }
-     const checking2 = ()=>{
-       
-        setChecked2(true)
-        setChecked1(false)
-        setChecked3(false)
-     }
+   var backendDatasondage={} 
+    const [choi, setChoix]=useState("")
+    console.log(route.params.tous)
      const [backendDataN, setBackendDataN]=useState([])
      const [backendDataP, setBackendDataP]=useState([])
-     var LIKES=[]
-     var DISLIKES=[]
     var names=[]
     var prenoms=[]
     useEffect (()=>{
@@ -64,6 +43,36 @@ function Sondages({navigation, route}) {
            }
          )
        }, [])
+       let TEST = (cho, idsondage)=> {
+         console.log(cho, idsondage, route.params.tous.id)
+       
+               resultat= fetch("http://192.168.1.7:5000/sondages/comments/"+idsondage+"/"+route.params.tous.id, {
+                method: "PATCH",
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ch:cho})
+              })
+              .then( response => response.json()).then(
+                data => {
+                  //setBackendData(data); 
+                  backendDatasondage= {...backendDatasondage, data}
+                  console.log(backendDatasondage);
+                  
+                }
+              )
+              .then(
+                (result) => {
+                  console.log(result);
+                },
+                (error) => {
+                    
+                  console.log(error);
+                });
+            
+              
+    
+       }
     return (
         <View style={styles.background}>
       <Text style={styles.compte}>Sondage</Text>
@@ -107,6 +116,9 @@ function Sondages({navigation, route}) {
           <Text style={styles.name} >{titre}</Text>
           </View>        
           <Text style={styles.subtitle1} >{contenu}</Text>
+          <SafeAreaView style={styles.checkbo}>
+
+          </SafeAreaView>
 
   <SafeAreaView style={styles.groupe30}>
     
@@ -114,24 +126,29 @@ function Sondages({navigation, route}) {
       
       <SafeAreaView style={styles.groupe18}>
       
-      {choix.map((type, i)=>
+      {choix.map((type, j)=>
       
   
     //[type.ch, setChecked]= useState(false);
                       <>
                     
                       
-      <SafeAreaView style={styles.groupe15} key={i}>
+      <SafeAreaView style={styles.groupe15} key={j}>
         
-      <CheckBox
-           style={styles.checkbo}
-            center
-            checkedIcon="dot-circle-o"
-            uncheckedIcon="circle-o"
-            onPress={(i===1)? checking:(i===2)? checking2: checking3}
-            checked={(i===1)? Pour:(i===2)? Contre: Ch3}
-            />
-            
+    
+        
+         <CheckBox style={styles.checkbo}
+         onPress={() =>{ setIndex(""+i+","+j+"")
+           setChoix(type.ch)
+            console.log(type.ch)
+         }}
+           checked={selectedIndex === ""+i+","+j+""}
+           
+           checkedIcon="dot-circle-o"
+           uncheckedIcon="circle-o"
+         />
+         
+       
 
             <Text style={styles.subtitle}>{type.ch}</Text>
         
@@ -143,12 +160,22 @@ function Sondages({navigation, route}) {
 
   </SafeAreaView>
   <SafeAreaView style={styles.groupe16}>
-    <SafeAreaView style={styles.groupe17}>
-        
-      </SafeAreaView>
+    
       
       <Text style={styles.subtitle}>{nombrevotes} votes</Text>
+      <SafeAreaView style={styles.groupe17}>
+        
       </SafeAreaView>
+      <SafeAreaView style={styles.groupe31}>
+         <SafeAreaView style={styles.group8}>
+            
+      <Button onPress={()=>{
+        TEST(choi, _id)
+      }}  color={colors.white}  title="Valider"/>
+        </SafeAreaView>
+        </SafeAreaView>
+      </SafeAreaView>
+      
   </SafeAreaView>
   
       </View>
@@ -174,6 +201,8 @@ const styles= StyleSheet.create({
     checkbo: {
         
         color:colors.primary, 
+        position:"relative", 
+        height:35
        
       },
       rectangle33:{
@@ -282,7 +311,7 @@ const styles= StyleSheet.create({
     },
     groupe16:{
        
-        width:'90%', 
+        width:'92%', 
         position:'relative',
         alignSelf:'center',
         justifyContent:'space-between',
@@ -344,6 +373,21 @@ const styles= StyleSheet.create({
         justifyContent:'space-around', 
         alignSelf:'center'
     },
+    group8:{
+        alignContent:'center', 
+        alignSelf:'center',
+        borderRadius:5, 
+        display:'flex', 
+        height:37, 
+        right:20,
+       backgroundColor:colors.black,
+        width:'23%'
+    }, groupe31:{
+        display:"flex",
+        width:"100%",
+        left:'85%'
+          
+      },
     ellipse1:{
         backgroundColor:'#ff0000', 
         borderRadius:50,

@@ -164,23 +164,23 @@ function PosCompliments({navigation, route}) {
            }
          )
        }, [])
-    return (
+       return (
         <View style={styles.background}>
         <Text style={styles.compte}>Home</Text>
         <View style={styles.rectangle3}>
-            <Pressable style={styles.subtitle} onPress={()=> navigation.navigate("All", {id:route.params.id, TOKEN:route.params.TOKEN})}>
+            <Pressable style={styles.subtitle} onPress={()=> navigation.navigate("All")}>
             <Text style={styles.subtitle}>Tous</Text>
             </Pressable>
-            <Pressable style={styles.subtitle} onPress={()=> navigation.navigate("Problèmes", {id:route.params.id, TOKEN:route.params.TOKEN})}>
+            <Pressable style={styles.subtitle} onPress={()=> navigation.navigate("Problèmes")}>
             <Text style={styles.subtitle}>Problèmes</Text>
             </Pressable>
-            <Pressable style={styles.subtitle} onPress={()=>navigation.navigate("Suggestions", {id:route.params.id, TOKEN:route.params.TOKEN})}>
+            <Pressable style={styles.subtitle} onPress={()=>navigation.navigate("Suggestions")}>
             <Text style={styles.subtitle}>Suggestions</Text>
             </Pressable>
-            <Pressable style={styles.subtitle} onPress={()=>navigation.navigate("Expériences", {id:route.params.id, TOKEN:route.params.TOKEN})}>
+            <Pressable style={styles.subtitle} onPress={()=>navigation.navigate("Expériences")}>
             <Text style={styles.subtitle}>Expériences</Text>
             </Pressable>
-            <Pressable style={styles.subtitle} onPress={()=>navigation.navigate("Compliments", {id:route.params.id, TOKEN:route.params.TOKEN})}>
+            <Pressable style={styles.subtitle} onPress={()=>navigation.navigate("Compliments")}>
             <Text style={styles.subtitle}>Compliments</Text>
             </Pressable>
         </View>
@@ -192,7 +192,7 @@ function PosCompliments({navigation, route}) {
           <Text style={styles.subtitle}> Loading ...</Text>
         ) : (
           
-          backendData.posts.map(({_id, contenu, typepost, userId, datepost, like, dislike, commentaires}, i)=>
+          backendData.posts.map(({_id, contenu, typepost, userId, datepost, like, dislike, commentaires, images}, i)=>
           (
             <>
             <View style={styles.rectangle4} key={i}>
@@ -226,6 +226,8 @@ function PosCompliments({navigation, route}) {
         
                     
             <Text style={styles.subtitle1} >{contenu}</Text>
+            
+            
  
     <SafeAreaView style={styles.groupe30}>
       <SafeAreaView style={styles.groupe16}>
@@ -243,7 +245,7 @@ function PosCompliments({navigation, route}) {
     <Pressable onPress={()=> {
      
      if(count===0 && ID !=_id && countD===0){
-      Like(_id, route.params.id); 
+      Like(_id, route.params.tous.id); 
       LIKES= [...LIKES, _id]
       console.log("one")
       setCount(1) 
@@ -254,13 +256,13 @@ function PosCompliments({navigation, route}) {
      else{
       if(count===1 && ID ===_id){
 
-        deleteLike(_id, route.params.id)
+        deleteLike(_id, route.params.tous.id)
         LIKES.filter(obj=>{
           return obj != _id
         })
       }
       else if (countD===1 && ID ===_id){
-        deleteDislike(_id, route.params.id)
+        deleteDislike(_id, route.params.tous.id)
         DISLIKES.filter(obj=>{
           return obj != _id
         })
@@ -282,7 +284,7 @@ function PosCompliments({navigation, route}) {
     </Pressable>
     <Pressable onPress={() => { 
     if(countD===0 && ID !=_id && count===0){
-      Dislike(_id, route.params.id); 
+      Dislike(_id, route.params.tous.id); 
       DISLIKES=[...DISLIKES, _id]
       console.log("one")
       setCountD(1) 
@@ -292,13 +294,13 @@ function PosCompliments({navigation, route}) {
      }
      else{
       if(count===1 && ID===_id){
-        deleteLike(_id, route.params.id)
+        deleteLike(_id, route.params.tous.id)
         LIKES.filter(obj=>{
           return obj != _id
         })
       }
       else if (countD===1 && ID === _id){
-        deleteDislike(_id, route.params.id)
+        deleteDislike(_id, route.params.tous.id)
         DISLIKES.filter(obj=>{
           return obj != _id
         })
@@ -322,7 +324,7 @@ function PosCompliments({navigation, route}) {
     <Pressable onPress={()=> navigation.navigate("Feed", {_id:_id})}>
     <AntDesign name="arrowsalt" size={24} color="black" > <Text style={styles.subtitle}>Feedbacks</Text></AntDesign> 
     </Pressable>
-    <Pressable onPress={()=> navigation.navigate("commentaires", {_id:_id, id:route.params.id})}>
+    <Pressable onPress={()=> navigation.navigate("commentaires", {_id:_id})}>
     <FontAwesome5 name="comment" size={24} color="black" > <Text style={styles.subtitle}>Commenter</Text></FontAwesome5> 
     </Pressable>
     

@@ -9,6 +9,8 @@ import { Entypo } from '@expo/vector-icons';
 import * as ImagePicker from "expo-image-picker";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import CalendarPicker from 'react-native-calendar-picker';
 import DatePicker from 'react-native-datepicker';
 //import Animated from 'react-native-reanimated';
 import { useRef } from 'react';
@@ -86,7 +88,7 @@ const pickimage= async () => {
     return (
     <View style={styles.background}>
         <Text style={styles.compte}>Compléter vos informations</Text>
-        <View style={styles.rectangle27}>
+        <ScrollView contentContainerStyle={styles.rectangle27}>
         <SafeAreaView style={styles.groupe32}>  
         <Text style={styles.subtitle}>Photo de profil</Text>
             
@@ -102,51 +104,6 @@ const pickimage= async () => {
             </SafeAreaView>
                 
             
-        </SafeAreaView> 
-        <SafeAreaView style={styles.groupe32}>
-            <Text style={styles.subtitle}>Date de naissance</Text>
-            <Animated.ScrollView  
-             scrollEventThrottle={16} // <-- Use 1 here to make sure no events are ever missed
-             onScroll={Animated.event(
-               [{ nativeEvent: { contentOffset: { y: tabOffsetValue } } }],
-               { useNativeDriver: true } // <-- Add this
-             )}
-           >
-            <DatePicker
-          style={styles.datePickerStyle}
-          date={dateN}
-          mode="date"
-          placeholder="Choisir votre date de naissance"
-          format="DD/MM/YYYY"
-          minDate="01-01-1930"
-          maxDate="30-12-2023"
-          confirmBtnText="Confirmer"
-          cancelBtnText="Annuler"
-          customStyles={{
-            dateIcon: {
-              position: 'absolute',
-              right: -5,
-              top: 4,
-              marginLeft: 0,
-            },
-            dateInput: {
-              borderColor : "gray",
-              alignItems: "flex-start",
-              borderWidth: 0,
-              borderBottomWidth: 1,
-            },
-            placeholderText: {
-              fontSize: 17,
-            },
-            dateText: {
-              fontSize: 17,
-            }
-          }}
-          onDateChange={(date) => {
-            setdateN(date);
-          }}
-        />
-        </Animated.ScrollView>
         </SafeAreaView> 
         
         <SafeAreaView style={styles.groupe32} >
@@ -186,7 +143,21 @@ const pickimage= async () => {
      </SafeAreaView>
      </SafeAreaView>
      
-      
+     <SafeAreaView style={styles.groupe320}>  
+            <Text style={styles.subtitlet}>Date de naissance</Text>
+            <CalendarPicker style={styles.calendar}
+            date={dateN}
+            minDate="01-01-1930"
+            maxDate={new Date()}
+            todayBackgroundColor={colors.primary}
+          selectedDayColor={colors.secondary}
+          selectedDayTextColor={colors.black}
+            onDateChange={(date) => {
+              setdateN(date)
+            }}
+            />
+            
+        </SafeAreaView>
         
         <SafeAreaView style={styles.groupe32}>
         <SafeAreaView style={styles.group8}>
@@ -194,12 +165,13 @@ const pickimage= async () => {
            </SafeAreaView>
         </SafeAreaView>
         
-        </View>
+        </ScrollView>
     </View>
     );
 }
 
 const styles=StyleSheet.create({
+   
     datePickerStyle: {
         width: 230,
       },
@@ -272,7 +244,7 @@ const styles=StyleSheet.create({
         height:'100%',
         alignSelf:'center',
         position:'absolute',
-        top:85,
+        height:950,
         width:'97%'
     }, 
     masqueImage: {
@@ -319,7 +291,15 @@ const styles=StyleSheet.create({
         top:'5%',
         width:'100%',
         marginTop:20, 
-    }, 
+    }, groupe320:{
+      display:"flex",
+      flexDirection:'column', 
+       
+      position:'relative', 
+      marginTop:'15%',
+      width:'100%',
+      
+  },
     groupe33:{
         display:"flex",
         flexDirection:'row',  
@@ -369,6 +349,11 @@ subtitlenn:{
 subtitle:{
     fontSize:17,
     
+},
+subtitlet:{
+  fontSize:17,
+  left:30, 
+  marginBottom:15
 },
 subtitle1:{
     fontSize:17,

@@ -23,6 +23,7 @@ import NavHome from '../navigation/navHome';
 import NavDeclaration from '../navigation/navDeclaration';
 import NavSondage from '../navigation/navSondage';
 import NavProfile from '../navigation/navProfile';
+import NavMap from '../navigation/navMap';
 //Screen names
 const homeName = "Home";
 const ProfileName = "Profile";
@@ -32,8 +33,10 @@ const mapName= "Map";
 //const settingsName = "Settings";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-function NavBar({navigation, route}) {
-  console.log(route)
+function NavBar({navigation,route}) {
+
+ // console.log(route.params.params.id)
+ var id=route.params.params
   const tabOffsetValue = useRef(new Animated.Value(0)).current;
   function getWidth() {
     let width = Dimensions.get("window").width
@@ -76,7 +79,8 @@ function NavBar({navigation, route}) {
         }}
         >
 
-          <Tab.Screen name={declarationName} component={NavDeclaration} options={{
+          <Tab.Screen name={declarationName}  component={NavDeclaration} initialParams={{tous:id}} options={{
+           
           tabBarIcon: ({ focused }) => (
             <View style={{
               // centring Tab Button...
@@ -90,9 +94,12 @@ function NavBar({navigation, route}) {
               ></Ionicons>
             </View>
           )
-        }} listeners={({ navigation, route }) => ({
-               
+        }} 
+        listeners={({ navigation, route }) => ({
+              //id:route.params.id,
+              
           // Onpress Update....
+               
           tabPress: e => {
             Animated.spring(tabOffsetValue, {
               toValue: 0,
@@ -100,7 +107,7 @@ function NavBar({navigation, route}) {
             }).start();
           }
         })}></Tab.Screen>
-          <Tab.Screen name={sondageName} component={NavSondage} options={{
+          <Tab.Screen name={sondageName} initialParams={{tous:id}} component={NavSondage} options={{
           tabBarIcon: ({ focused }) => (
             <View style={{
               // centring Tab Button...
@@ -123,7 +130,7 @@ function NavBar({navigation, route}) {
             }).start();
           }
         })}></Tab.Screen>
-        <Tab.Screen name={homeName} component={NavHome} options={{
+        <Tab.Screen name={homeName} component={NavHome} initialParams={{tous:id}} options={{
           tabBarIcon: ({ focused }) => (
 
               <View style={{
@@ -152,7 +159,7 @@ function NavBar({navigation, route}) {
             }).start();
           }
         })}/>
-        <Tab.Screen name={mapName} component={Maps} options={{
+        <Tab.Screen name={mapName} component={NavMap} initialParams={{tous:id}} options={{
           tabBarIcon: ({ focused }) => (
             <View style={{
               // centring Tab Button...
@@ -175,7 +182,7 @@ function NavBar({navigation, route}) {
             }).start();
           }
         })}></Tab.Screen>
-        <Tab.Screen name={ProfileName} component={Myprofile} options={{
+        <Tab.Screen name={ProfileName} component={Myprofile} initialParams={{tous:id}} options={{
         
           tabBarIcon: ({ focused }) => (
             <View style={{

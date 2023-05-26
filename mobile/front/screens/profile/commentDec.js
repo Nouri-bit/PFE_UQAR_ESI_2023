@@ -8,7 +8,7 @@ function CommentDec({navigateur, route}) {
     const [backendData, setBackendData]=useState([{}])
     const [backendDataComment, setBackendDataComment]=useState([{}])
     const [Contenu, setContenu] = useState("");
-    console.log(route)
+    //console.log(route)
     let Commenter= (Id, iduser, contenu)=>{
        
         resultat= fetch("http://192.168.1.7:5000/declarations/comment/"+Id+"/"+iduser+"/citoyen", {
@@ -117,7 +117,7 @@ function CommentDec({navigateur, route}) {
    
    </SafeAreaView>
     <TextInput style={styles.subtitlen} placeholder="Ajouter un Commentaire" value={Contenu} onChangeText={(text) => setContenu(text)}  enterKeyHint="done" />
-   <Pressable onPress={()=> Commenter(route.params._id,"6423013c60deff1f15c495ca", Contenu)}>
+   <Pressable onPress={()=> Commenter(route.params._id,route.params.tous.id, Contenu)}>
    <FontAwesome5 name="comment" size={29} color={colors.secondary}/> 
    </Pressable>
    </SafeAreaView>

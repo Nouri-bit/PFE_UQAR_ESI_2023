@@ -80,7 +80,7 @@ router.get("/:type", (req, res, next) => {
   const type = req.params.type
   if (type === 'général'){
     publications.find({etat: true})
-    .select("_id contenu typepost userId datepost like dislike position commentaires feedbacks")
+    .select("_id contenu typepost userId datepost like dislike semantique spatial temporel position commentaires feedbacks")
     .exec()
     .then(docs => {
       const response = {
@@ -94,6 +94,9 @@ router.get("/:type", (req, res, next) => {
             datepost: doc.datepost,
             like: doc.like,
             dislike: doc.dislike,
+            spatial:doc.spatial, 
+            semantique:doc.semantique, 
+            temporel:doc.temporel, 
             position: doc.position,
             commentaires: doc.commentaires,
             feedbacks: doc.feedbacks
@@ -105,7 +108,7 @@ router.get("/:type", (req, res, next) => {
   }
   else{
     publications.find({etat: true, typepost: { $in : [type]}})
-    .select("_id contenu typepost userId datepost like dislike position commentaires feedbacks")
+    .select("_id contenu typepost userId datepost like dislike position semantique spatial temporel commentaires feedbacks")
     .exec()
     .then(docs => {
       const response = {
@@ -119,6 +122,9 @@ router.get("/:type", (req, res, next) => {
             datepost: doc.datepost,
             like: doc.like,
             dislike: doc.dislike,
+            spatial:doc.spatial, 
+            semantique:doc.semantique, 
+            temporel:doc.temporel, 
             position: doc.position,
             commentaires: doc.commentaires,
             feedbacks: doc.feedbacks

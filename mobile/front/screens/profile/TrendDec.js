@@ -234,7 +234,7 @@ function TrendDec({navigation, route}) {
   <Pressable onPress={()=>{
      
      if(count===0 && ID !=_id && countD===0){
-      Like(_id, userId); 
+      Like(_id, route.params.tous.id); 
       LIKES= [...LIKES, _id]
       console.log("one")
       setCount(1) 
@@ -245,13 +245,13 @@ function TrendDec({navigation, route}) {
      else{
       if(count===1 && ID ===_id){
 
-        deleteLike(_id, userId)
+        deleteLike(_id, route.params.tous.id)
         LIKES.filter(obj=>{
           return obj != _id
         })
       }
       else if (countD===1 && ID ===_id){
-        deleteDislike(_id, userId)
+        deleteDislike(_id, route.params.tous.id)
         DISLIKES.filter(obj=>{
           return obj != _id
         })
@@ -274,7 +274,7 @@ function TrendDec({navigation, route}) {
   </Pressable>
   <Pressable onPress={() => { 
     if(countD===0 && ID !=_id && count===0){
-      Dislike(_id, userId); 
+      Dislike(_id, route.params.tous.id); 
       DISLIKES=[...DISLIKES, _id]
       console.log("one")
       setCountD(1) 
@@ -284,13 +284,13 @@ function TrendDec({navigation, route}) {
      }
      else{
       if(count===1 && ID===_id){
-        deleteLike(_id, userId)
+        deleteLike(_id, route.params.tous.id)
         LIKES.filter(obj=>{
           return obj != _id
         })
       }
       else if (countD===1 && ID === _id){
-        deleteDislike(_id, userId)
+        deleteDislike(_id,route.params.tous.id)
         DISLIKES.filter(obj=>{
           return obj != _id
         })
@@ -311,10 +311,10 @@ function TrendDec({navigation, route}) {
   </Pressable>
   
   </SafeAreaView>
-  <Pressable onPress={()=> navigation.navigate("Feeds", {id:_id})}>
+  <Pressable onPress={()=> navigation.navigate("Feeds", {_id:_id})}>
     <AntDesign name="arrowsalt" size={24} color="black" > <Text style={styles.subtitle}>Feedbacks</Text></AntDesign> 
     </Pressable>
-  <Pressable onPress={()=> navigation.navigate("commentaire", {id:_id})}>
+  <Pressable onPress={()=> navigation.navigate("commentaire", {_id:_id})}>
   <FontAwesome5 name="comment" size={24} color="black" > <Text style={styles.subtitle}>Commenter</Text></FontAwesome5> 
   </Pressable>
   </SafeAreaView>

@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import { View, StyleSheet, Text, SafeAreaView, ScrollView, Image, Alert} from 'react-native';
+import React, {useState, useEffect, Component} from 'react';
+import { View, StyleSheet, Text, SafeAreaView, ScrollView, Image, Alert, Button} from 'react-native';
 import colors from '../../config/colors';
 import { Pressable } from "react-native";
 import {  SimpleLineIcons } from "@expo/vector-icons";
@@ -9,100 +9,41 @@ import MapView from 'react-native-maps';
 import { LogBox } from 'react-native';
 import { Marker } from "react-native-maps";
 import CalendarPicker from 'react-native-calendar-picker';
-function Maps({navigation, route}) {
-    console.log(route.params.DateD.toISOString())
-    var dateD = new Date().getDay; 
-    //console.log(new Date()< route.params.DateD)
-    //console.log(route.params.DateF)
-    const debut= route.params.DateF; 
+import Cal from './cal';
+
+function Calendar({navigation, route}) {
     Press=() =>{
         Alert.alert('Success');
        }
    const [backendData, setBackendData]=useState([{}])
  // var  backendData= {}
 
- const [dateN, setdateN] = useState('17-05-2023');
-    useEffect (()=>{
-        resultat= fetch("http://192.168.1.7:5000/posts/général").then(
-           response => response.json()
-         ).then(
-           data => {
-             setBackendData(data)
-           }
-         )
-       }, [])
+
     return (
         <View style={styles.background}>
-        <Text style={styles.compte}>Carte géographique</Text>
-        <View style={styles.rectangle3}>
-        <Pressable style={styles.subtitle} onPress={()=> navigation.navigate("allmap", {DateD:route.params.DateD, DateF:route.params.DateF})}>
-            <Text style={styles.subtitle}>Tous</Text>
-            </Pressable>
-            <Pressable style={styles.subtitle} onPress={()=> navigation.navigate("mapProblèmes", {DateD:route.params.DateD, DateF:route.params.DateF})}>
-            <Text style={styles.subtitle}>Problèmes</Text>
-            </Pressable>
-            <Pressable style={styles.subtitle} onPress={()=>navigation.navigate("mapSuggestions", {DateD:route.params.DateD, DateF:route.params.DateF})}>
-            <Text style={styles.subtitle}>Suggestions</Text>
-            </Pressable>
-            <Pressable style={styles.subtitle} onPress={()=>navigation.navigate("mapExpériences", {DateD:route.params.DateD, DateF:route.params.DateF})}>
-            <Text style={styles.subtitle}>Expériences</Text>
-            </Pressable>
-            <Pressable style={styles.subtitle} onPress={()=>navigation.navigate("mapCompliments", {DateD:route.params.DateD, DateF:route.params.DateF})}>
-            <Text style={styles.subtitle}>Compliments</Text>
-            </Pressable>
-        </View>
-        
-        <MapView       
-         style={{flex: 1}}        
-         region={{          latitude:36.752887,          longitude: 3.042048,          latitudeDelta: 0.1,          longitudeDelta: 0.01        }}        showsUserLocation={true} > 
-        
-        {
-       (typeof backendData.posts ==='undefined') ? (
-          <Text style={styles.subtitle}></Text>
-        ) : (
-          
-          backendData.posts.map(({typepost,datepost,spatial}, i)=>
-          ( 
-
-            <>
-            {
-                (datepost <route.params.DateF.toISOString() && datepost>=route.params.DateD.toISOString())?
-                <>
-                {typepost.map((type)=>
-          spatial[0]!=undefined?
-          
-                      <>
-
-                      <Pressable onPress={()=> Alert.alert("test")}>
-                      <Marker pinColor={type==="Problèmes" ? "#FF0000" : type==="Suggestions"? "#FBE204": type==="Compliments" ? "#05FF00": colors.black} coordinate={{latitude:spatial[0].latitude,          longitude: spatial[0].longitude,          latitudeDelta: 0.1,          longitudeDelta: 0.01        }} />
-          
-                      </Pressable>
-                      
-                      
-          </> : 
-          <Marker pinColor={type==="Problèmes" ? "#FF0000" : type==="Suggestions"? "#FBE204": type==="Compliments" ? "#05FF00": colors.black} coordinate={{latitude:36.58,          longitude: 3.09,          latitudeDelta: 0.1,          longitudeDelta: 0.01        }} />
+        <Text style={styles.compte}>Tranche de temps</Text>
        
-           )}
-                
-                </>
-                : 
-                <>
-                 
-                </>
-            }
-          
-           </>
- ))
-)
-}
-</MapView>
-
- 
-  
+       
+        
         </View>
     );
 }
 const styles= StyleSheet.create({
+    groupe31:{
+        display:"flex",
+        width:"100%",
+        left:'40%'
+          
+      },
+    group8:{
+        alignContent:'center', 
+        alignSelf:'center',
+        borderRadius:5, 
+        display:'flex', 
+        height:37, 
+        right:20,
+        width:'19%'
+    }, 
     containerPost:{
         flexDirection:'column',
         justifyContent:'space-around', 
@@ -277,4 +218,4 @@ const styles= StyleSheet.create({
         
     }
 });
-export default Maps;
+export default Calendar;

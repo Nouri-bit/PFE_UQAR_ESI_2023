@@ -12,6 +12,7 @@ function Declarations({navigation, route}) {
   const [backendDatadeleteDislike, setBackendDatadeleteDislike]=useState([{}])
   const [backendDataComment, setBackendDataComment]=useState([{}])
   //var count = 0; 
+  //console.log(route.params.tous.id)
   const [count, setCount] = useState(0);
   const [countD, setCountD] = useState(0);
   const [ID, setID] = useState(0);
@@ -155,7 +156,7 @@ function Declarations({navigation, route}) {
                      
                 setBackendDataP(prenoms)
               
-               console.log(userId, backendDataP, backendDataN)
+               //console.log(userId, backendDataP, backendDataN)
               
               }
             )            
@@ -234,7 +235,7 @@ function Declarations({navigation, route}) {
   <Pressable onPress={()=>{
      
      if(count===0 && ID !=_id && countD===0){
-      Like(_id, userId); 
+      Like(_id, route.params.tous.id); 
       LIKES= [...LIKES, _id]
       console.log("one")
       setCount(1) 
@@ -245,13 +246,13 @@ function Declarations({navigation, route}) {
      else{
       if(count===1 && ID ===_id){
 
-        deleteLike(_id, userId)
+        deleteLike(_id, route.params.tous.id)
         LIKES.filter(obj=>{
           return obj != _id
         })
       }
       else if (countD===1 && ID ===_id){
-        deleteDislike(_id, userId)
+        deleteDislike(_id, route.params.tous.id)
         DISLIKES.filter(obj=>{
           return obj != _id
         })
@@ -274,7 +275,7 @@ function Declarations({navigation, route}) {
   </Pressable>
   <Pressable onPress={() => { 
     if(countD===0 && ID !=_id && count===0){
-      Dislike(_id, userId); 
+      Dislike(_id, route.params.tous.id); 
       DISLIKES=[...DISLIKES, _id]
       console.log("one")
       setCountD(1) 
@@ -284,13 +285,13 @@ function Declarations({navigation, route}) {
      }
      else{
       if(count===1 && ID===_id){
-        deleteLike(_id, userId)
+        deleteLike(_id, route.params.tous.id)
         LIKES.filter(obj=>{
           return obj != _id
         })
       }
       else if (countD===1 && ID === _id){
-        deleteDislike(_id, userId)
+        deleteDislike(_id, route.params.tous.id)
         DISLIKES.filter(obj=>{
           return obj != _id
         })
