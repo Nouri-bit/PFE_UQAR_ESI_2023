@@ -83,7 +83,7 @@ if (permission.status !== 'granted') {
      }
     //  console.log("here we go "+TYPE)
    
-           resultat= fetch("http://192.168.1.7:5000/posts/"+route.params.tous.id, {
+           resultat= fetch(colors.IP+"posts/"+route.params.tous.id, {
             method: "POST",
             headers: {
               'Content-Type': 'application/json'

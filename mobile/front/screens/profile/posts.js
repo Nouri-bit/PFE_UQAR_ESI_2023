@@ -21,7 +21,7 @@ function Posts({navigation, route}) {
       const [ID, setID] = useState(0);
     let Like= (Id, iduser)=>{
       
-        resultat= fetch("http://192.168.1.7:5000/posts/like/"+Id+"/"+iduser+"/citoyen", {
+        resultat= fetch(colors.IP+"posts/like/"+Id+"/"+iduser+"/citoyen", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -47,7 +47,7 @@ function Posts({navigation, route}) {
     }
     let deleteLike = (Id, iduser)=> {
         
-        resultat= fetch("http://192.168.1.7:5000/posts/likedelete/"+Id+"/"+iduser+"/citoyen", {
+        resultat= fetch(colors.IP+"posts/likedelete/"+Id+"/"+iduser+"/citoyen", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -73,7 +73,7 @@ function Posts({navigation, route}) {
     }
     let deleteDislike = (Id, iduser)=> {
         
-        resultat= fetch("http://192.168.1.7:5000/posts/dislikedelete/"+Id+"/"+iduser+"/citoyen", {
+        resultat= fetch(colors.IP+"posts/dislikedelete/"+Id+"/"+iduser+"/citoyen", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -99,7 +99,7 @@ function Posts({navigation, route}) {
     }
     let Dislike= (Id, iduser)=>{
         
-        resultat= fetch("http://192.168.1.7:5000/posts/dislike/"+Id+"/"+iduser+"/citoyen", {
+        resultat= fetch(colors.IP+"posts/dislike/"+Id+"/"+iduser+"/citoyen", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -130,23 +130,23 @@ function Posts({navigation, route}) {
     const [disliked, setDisliked] = useState(false);
     const [backendData, setBackendData]=useState([{}])
     const [backendDataN, setBackendDataN]=useState([])
+    const [backendDataN2, setBackendDataN2]=useState([{}])
   const [backendDataP, setBackendDataP]=useState([])
+  const [numero, setnumero]=useState(0)
   var LIKES=[]
   var DISLIKES=[]
  var names=[]
  var prenoms=[]
-    useEffect(()=>{
-		setBackendData1(null);
-        setBackendDatadislike(null);
-	}, [])
+    
     useEffect (()=>{
-        resultat= fetch("http://192.168.1.7:5000/posts/général").then(
+        resultat= fetch(colors.IP+"posts/général").then(
            response => response.json()
          ).then(
            data => {
              setBackendData(data)
+             if(numero==0){
              data.posts.map(({userId})=>{
-              fetch("http://192.168.1.7:5000/citoyens/"+userId).then(
+              fetch(colors.IP+"citoyens/"+userId).then(
                 response => response.json()
               ).then(
                 data => {
@@ -155,15 +155,15 @@ function Posts({navigation, route}) {
                   setBackendDataN(names)
                        
                   setBackendDataP(prenoms)
-                
+                    setnumero(1)
                  //console.log(userId, backendDataP, backendDataN)
                 
                 }
               )            
-             })
+             })}
            }
          )
-       }, [])
+       }, [backendData1, backendDatadislike, backendDatadeleteLike, backendDatadeleteDislike])
     return (
         <View style={styles.background}>
         <Text style={styles.compte}>Home</Text>
@@ -193,8 +193,9 @@ function Posts({navigation, route}) {
         ) : (
           
           backendData.posts.map(({_id, contenu, typepost, userId, datepost, like, dislike, commentaires, images}, i)=>
-          (
+          ( 
             <>
+            
             <View style={styles.rectangle4} key={i}>
                   
         <SafeAreaView style={styles.groupe13} >

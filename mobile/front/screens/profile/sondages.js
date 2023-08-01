@@ -11,21 +11,55 @@ import { FontAwesome5, AntDesign} from '@expo/vector-icons';
 function Sondages({navigation, route}) {
     const [selectedIndex, setIndex] = React.useState("-1,-1");
   const [backendData, setBackendData]=useState([{}])
-   var backendDatasondage={} 
+   //var backendDatasondage={} 
+   const [backendDatasondage, setbackendDatasondage]=useState([{}])
     const [choi, setChoix]=useState("")
     console.log(route.params.tous)
      const [backendDataN, setBackendDataN]=useState([])
      const [backendDataP, setBackendDataP]=useState([])
     var names=[]
     var prenoms=[]
+    let TEST = (cho, idsondage)=> {
+      console.log(cho, idsondage, route.params.tous.id)
+    
+            resultat= fetch(colors.IP+"sondages/comments/"+idsondage+"/"+route.params.tous.id, {
+             method: "PATCH",
+             headers: {
+               'Content-Type': 'application/json'
+             },
+             body: JSON.stringify({ch:cho})
+           })
+           .then( response => response.json()).then(
+             data => {
+               //setBackendData(data); 
+               //backendDatasondage= {...backendDatasondage, data}
+               setbackendDatasondage(data)
+               console.log(backendDatasondage);
+               
+             }
+           )
+           .then(
+             (result) => {
+               console.log(result);
+             },
+             (error) => {
+                 
+               console.log(error);
+             });
+         
+           
+ 
+    }
+    const [numero, setnumero]=useState(0)
     useEffect (()=>{
-        resultat= fetch("http://192.168.1.7:5000/sondages/all").then(
+        resultat= fetch(colors.IP+"sondages/all").then(
            response => response.json()
          ).then(
            data => {
              setBackendData(data)
+             if(numero==0){
              data.posts.map(({facilitateurId})=>{
-                fetch("http://192.168.1.7:5000/citoyens/f/"+facilitateurId).then(
+                fetch(colors.IP+"citoyens/f/"+facilitateurId).then(
                   response => response.json()
                 ).then(
                   data => {
@@ -34,45 +68,16 @@ function Sondages({navigation, route}) {
                     setBackendDataN(names)
                          
                     setBackendDataP(prenoms)
-                  
+                    setnumero(1)
                    //console.log(userId, backendDataP, backendDataN)
                   
                   }
                 )            
                })
-           }
+           }}
          )
-       }, [])
-       let TEST = (cho, idsondage)=> {
-         console.log(cho, idsondage, route.params.tous.id)
+       }, [backendDatasondage])
        
-               resultat= fetch("http://192.168.1.7:5000/sondages/comments/"+idsondage+"/"+route.params.tous.id, {
-                method: "PATCH",
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ch:cho})
-              })
-              .then( response => response.json()).then(
-                data => {
-                  //setBackendData(data); 
-                  backendDatasondage= {...backendDatasondage, data}
-                  console.log(backendDatasondage);
-                  
-                }
-              )
-              .then(
-                (result) => {
-                  console.log(result);
-                },
-                (error) => {
-                    
-                  console.log(error);
-                });
-            
-              
-    
-       }
     return (
         <View style={styles.background}>
       <Text style={styles.compte}>Sondage</Text>

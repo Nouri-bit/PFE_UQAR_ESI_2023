@@ -12,7 +12,7 @@ function Comment({navigateur, route}) {
     console.log(route)
     let Commenter= (Id, iduser, contenu)=>{
        
-        resultat= fetch("http://192.168.1.7:5000/posts/comment/"+Id+"/"+iduser+"/citoyen", {
+        resultat= fetch(colors.IP+"posts/comment/"+Id+"/"+iduser+"/citoyen", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -43,7 +43,7 @@ function Comment({navigateur, route}) {
    var names=[]
    var prenoms=[]
     useEffect (()=>{
-        resultat= fetch("http://192.168.1.7:5000/posts/comments/"+route.params._id).then(
+        resultat= fetch(colors.IP+"posts/comments/"+route.params._id).then(
            response => response.json()
          ).then(
            data => {
@@ -51,7 +51,7 @@ function Comment({navigateur, route}) {
              //console.log(backendData.posts)
              data.posts[0].commentaire.map(({user})=>{
               
-                fetch("http://192.168.1.7:5000/citoyens/"+user).then(
+                fetch(colors.IP+"citoyens/"+user).then(
                   response => response.json()
                 ).then(
                   data => {
@@ -68,7 +68,7 @@ function Comment({navigateur, route}) {
                })
            }
          )
-       }, [])
+       }, [backendDataComment])
     return (
         <View style={styles.background}>
         <Text style={styles.compte}>Commentaires</Text>

@@ -18,14 +18,14 @@ function FeedDec({navigation, route}) {
    var names=[]
    var prenoms=[]
     useEffect (()=>{
-        resultat= fetch("http://192.168.1.7:5000/declarations/feedbacks/"+route.params._id).then(
+        resultat= fetch(colors.IP+"declarations/feedbacks/"+route.params._id).then(
            response => response.json()
          ).then(
            data => {
              setBackendData(data)
              //console.log(backendData.posts)
              data.posts[0].feedback.map(({user})=>{
-                fetch("http://192.168.1.7:5000/citoyens/f/"+user).then(
+                fetch(colors.IP+"citoyens/f/"+user).then(
                   response => response.json()
                 ).then(
                   data => {

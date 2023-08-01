@@ -21,7 +21,7 @@ function Login({navigation}) {
     const [Mdp, setMdp] = useState("");
     let Like= (mail, mdp)=>{
        
-      resultat= fetch("http://192.168.1.7:5000/citoyens/login", {
+      resultat= fetch(colors.IP+"citoyens/login", {
           method: "POST",
           headers: {
               "Content-Type": "application/json"
@@ -49,44 +49,7 @@ function Login({navigation}) {
         
     console.log(resultat)
   }
-   let TEST = (mail,  mdp)=> {
-    //const R = {idcitoyen:'00005', mail : mail,telephone: telephone, mdp:mdp};
-    
-           resultat= fetch("http://192.168.1.7:5000/citoyens/login", {
-            method: "POST",
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({mail : mail, mdp:mdp})
-          })
-          .then( response => response.json()).then(
-            data => {
-              //setBackendData(data); 
-              backendData={...backendData, data}
-              //console.log(backendData.token)
-              //console.log(backendData.idcitoyen)
-                if(backendData.data.message==="Accès réussi"){ 
-                  //console.log("c boooooooooooon")
-                  navigation.navigate("NavBar", {screen: "Profile" ,  params:{ id:backendData.idcitoyen, TOKEN:backendData.token}})
-                  }
-                  
-               
-              
-              console.log(backendData);
-            }
-          )
-          .then(
-            (result) => {
-              console.log(result);
-            },
-            (error) => {
-                
-              console.log(error);
-            });
-            console.log('--------------------');
-          
-
-   }
+   
     return (
         <View style={styles.background}>
          <Text style={styles.compte}>Se Connecter</Text>

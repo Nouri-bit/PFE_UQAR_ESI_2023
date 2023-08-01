@@ -7,6 +7,7 @@ export default {
         flex:1,
        backgroundColor: this.primary
     }, 
+    IP:"http://10.0.10.212:5000/",
     compte: {
         
         alignSelf:'center',

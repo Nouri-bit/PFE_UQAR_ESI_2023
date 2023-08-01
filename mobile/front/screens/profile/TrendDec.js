@@ -22,7 +22,7 @@ function TrendDec({navigation, route}) {
   };
   let Like= (Id, iduser)=>{
      
-      resultat= fetch("http://192.168.1.7:5000/declarations/like/"+Id+"/"+iduser+"/citoyen", {
+      resultat= fetch(colors.IP+"declarations/like/"+Id+"/"+iduser+"/citoyen", {
           method: "PATCH",
           headers: {
               "Content-Type": "application/json"
@@ -48,7 +48,7 @@ function TrendDec({navigation, route}) {
   }
   let deleteLike = (Id, iduser)=> {
       
-      resultat= fetch("http://192.168.1.7:5000/declarations/likedelete/"+Id+"/"+iduser+"/citoyen", {
+      resultat= fetch(colors.IP+"declarations/likedelete/"+Id+"/"+iduser+"/citoyen", {
           method: "PATCH",
           headers: {
               "Content-Type": "application/json"
@@ -74,7 +74,7 @@ function TrendDec({navigation, route}) {
   }
   let deleteDislike = (Id, iduser)=> {
       
-      resultat= fetch("http://192.168.1.7:5000/declarations/dislikedelete/"+Id+"/"+iduser+"/citoyen", {
+      resultat= fetch(colors.IP+"declarations/dislikedelete/"+Id+"/"+iduser+"/citoyen", {
           method: "PATCH",
           headers: {
               "Content-Type": "application/json"
@@ -99,7 +99,7 @@ function TrendDec({navigation, route}) {
   }
   let Dislike= (Id, iduser)=>{
       
-      resultat= fetch("http://192.168.1.7:5000/declarations/dislike/"+Id+"/"+iduser+"/citoyen", {
+      resultat= fetch(colors.IP+"declarations/dislike/"+Id+"/"+iduser+"/citoyen", {
           method: "PATCH",
           headers: {
               "Content-Type": "application/json"
@@ -137,7 +137,7 @@ function TrendDec({navigation, route}) {
  var prenoms=[]
  
   useEffect (()=>{
-      resultat= fetch("http://192.168.1.7:5000/declarations/trends").then(
+      resultat= fetch(colors.IP+"declarations/trends").then(
          response => response.json()
        ).then(
          data => {
@@ -145,7 +145,7 @@ function TrendDec({navigation, route}) {
             // backendData = {...backendData, data}
             // console.log(backendData.data.posts)
            data.posts.map(({userId})=>{
-            fetch("http://192.168.1.7:5000/citoyens/"+userId).then(
+            fetch(colors.IP+"citoyens/f/"+userId).then(
               response => response.json()
             ).then(
               data => {
@@ -165,7 +165,7 @@ function TrendDec({navigation, route}) {
         )
     
   
-     }, [])
+     }, [backendData1, backendDatadislike, backendDatadeleteLike, backendDatadeleteDislike])
      
     return (
       <View style={styles.background}>

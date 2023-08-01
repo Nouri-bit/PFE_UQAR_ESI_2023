@@ -47,7 +47,7 @@ class Cal extends Component {
      DateF=null;
     return (
         <View style={styles.background}>
-        <Text style={styles.compte}>Tranche de temps</Text>
+        <Text style={styles.compte}>Période de temps</Text>
          <SafeAreaView style={styles.groupe31}>
         <SafeAreaView style={styles.group8}>
             <Button  onPress={()=>this.props.navigation.push('allmap', {DateD: startDate, DateF:endDate})} color={colors.white}  title="Suivant"/>
@@ -84,7 +84,6 @@ const styles= StyleSheet.create({
         shadowColor:"#4b4b26",
         
         alignSelf:'center',
-        
         width:'97%'
     },
     groupe31:{

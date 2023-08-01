@@ -19,9 +19,9 @@ function PosSuggestions({navigation, route}) {
     const [count, setCount] = useState(0);
       const [countD, setCountD] = useState(0);
       const [ID, setID] = useState(0);
-    let Like= (Id, iduser)=>{
+      let Like= (Id, iduser)=>{
       
-        resultat= fetch("http://192.168.1.7:5000/posts/like/"+Id+"/"+iduser+"/citoyen", {
+        resultat= fetch(colors.IP+"posts/like/"+Id+"/"+iduser+"/citoyen", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -47,7 +47,7 @@ function PosSuggestions({navigation, route}) {
     }
     let deleteLike = (Id, iduser)=> {
         
-        resultat= fetch("http://192.168.1.7:5000/posts/likedelete/"+Id+"/"+iduser+"/citoyen", {
+        resultat= fetch(colors.IP+"posts/likedelete/"+Id+"/"+iduser+"/citoyen", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -73,7 +73,7 @@ function PosSuggestions({navigation, route}) {
     }
     let deleteDislike = (Id, iduser)=> {
         
-        resultat= fetch("http://192.168.1.7:5000/posts/dislikedelete/"+Id+"/"+iduser+"/citoyen", {
+        resultat= fetch(colors.IP+"posts/dislikedelete/"+Id+"/"+iduser+"/citoyen", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -99,7 +99,7 @@ function PosSuggestions({navigation, route}) {
     }
     let Dislike= (Id, iduser)=>{
         
-        resultat= fetch("http://192.168.1.7:5000/posts/dislike/"+Id+"/"+iduser+"/citoyen", {
+        resultat= fetch(colors.IP+"posts/dislike/"+Id+"/"+iduser+"/citoyen", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -140,13 +140,13 @@ function PosSuggestions({navigation, route}) {
         setBackendDatadislike(null);
 	}, [])
     useEffect (()=>{
-        resultat= fetch("http://192.168.1.7:5000/posts/Suggestions").then(
+        resultat= fetch(colors.IP+"posts/Suggestions").then(
            response => response.json()
          ).then(
            data => {
              setBackendData(data)
              data.posts.map(({userId})=>{
-              fetch("http://192.168.1.7:5000/citoyens/"+userId).then(
+              fetch(colors.IP+"citoyens/"+userId).then(
                 response => response.json()
               ).then(
                 data => {
@@ -163,7 +163,7 @@ function PosSuggestions({navigation, route}) {
              })
            }
          )
-       }, [])
+       }, [backendData1, backendDatadislike, backendDatadeleteLike, backendDatadeleteDislike])
        return (
         <View style={styles.background}>
         <Text style={styles.compte}>Home</Text>

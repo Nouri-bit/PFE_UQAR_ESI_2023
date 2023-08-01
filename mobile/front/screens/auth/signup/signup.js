@@ -20,7 +20,7 @@ function Signup({navigation, route}) {
     const [Prenom, setPrenom] = useState("");
     let Like= (nom, prenom, mail, telephone, mdp)=>{
        
-        resultat= fetch("http://192.168.1.7:5000/citoyens/signup", {
+        resultat= fetch(colors.IP+"citoyens/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

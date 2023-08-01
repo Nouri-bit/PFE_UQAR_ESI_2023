@@ -8,7 +8,7 @@ function Myprofile({navigation,route}) {
     console.log(route)
     const [backendData, setBackendData]=useState([{}])
   useEffect (()=>{
-   resultat= fetch("http://192.168.1.7:5000/citoyens/"+route.params.tous.id, {
+   resultat= fetch(colors.IP+"citoyens/"+route.params.tous.id, {
     headers:{
         'Authorization':'Bearer '+route.params.tous.TOKEN
     }

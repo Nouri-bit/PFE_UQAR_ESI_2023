@@ -55,7 +55,7 @@ const pickimage= async () => {
            else{
             TYPE="Femme"
            }
-        resultat= fetch("http://192.168.1.7:5000/citoyens/"+route.params.Email, {
+        resultat= fetch(colors.IP+"citoyens/"+route.params.Email, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -89,6 +89,9 @@ const pickimage= async () => {
     <View style={styles.background}>
         <Text style={styles.compte}>Compléter vos informations</Text>
         <ScrollView contentContainerStyle={styles.rectangle27}>
+        <SafeAreaView style={styles.group88}>
+            <Button onPress={()=>navigation.navigate("Login")} color={colors.secondary}  title="Ignorer"/>
+           </SafeAreaView>
         <SafeAreaView style={styles.groupe32}>  
         <Text style={styles.subtitle}>Photo de profil</Text>
             
@@ -336,6 +339,15 @@ const styles=StyleSheet.create({
         backgroundColor:colors.primary,
         width:'26%'
     }, 
+    group88:{
+      alignContent:'center', 
+      alignSelf:'center',
+      borderRadius:5, 
+      display:'flex', 
+      height:40, 
+      left:'37%',
+      top:15,
+  }, 
     groupe31:{
         gap:17, 
         marginTop:22, 

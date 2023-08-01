@@ -28,7 +28,7 @@ router.get('/f/:idcitoyen',async(req, res) =>{
 })
 router.patch('/:email', async(req, res) =>{
     
-    const citizen = await pool.query('UPDATE citoyen SET sexe = $1, photoprofil = $2, datenaissance = $3  WHERE mail =$4', [req.body.sexe, req.body.photoprofil, req.body.datenaissance, req.params.email]) 
+    const citizen = await pool.query('UPDATE citoyen SET sexe = $1, photoprofil = $2, datenaissance = $3  WHERE mail =$4', [req.body.sexe, req.body.photoprofil, req.body.datenaissance.substring(0,10), req.params.email]) 
     res.json(citizen)
 })
 
@@ -47,7 +47,7 @@ router.post('/signup', async(req, res)=>{
                     error:  err
                 });
             } else { 
-            resultat= await pool.query('insert into citoyen(idcitoyen,nom, prenom,  mail, telephone, mdp, datecreation) values($1, $2, $3, $4, $5, $6, $7)', [new mongoose.Types.ObjectId(),req.body.nom, req.body.prenom, req.body.mail, req.body.telephone, hash, Date()]);
+            resultat= await pool.query('insert into citoyen(idcitoyen,nom, prenom,  mail, telephone, mdp, datecreation2) values($1, $2, $3, $4, $5, $6, current_date)', [new mongoose.Types.ObjectId(),req.body.nom, req.body.prenom, req.body.mail, req.body.telephone, hash]);
             res.status(201).json({message: "Utilisateur créé avec succès"});
             //console.log(resultat);
             //console.log(res);

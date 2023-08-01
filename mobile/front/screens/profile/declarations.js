@@ -23,7 +23,7 @@ function Declarations({navigation, route}) {
   };
   let Like= (Id, iduser)=>{
      
-      resultat= fetch("http://192.168.1.7:5000/declarations/like/"+Id+"/"+iduser+"/citoyen", {
+      resultat= fetch(colors.IP+"declarations/like/"+Id+"/"+iduser+"/citoyen", {
           method: "PATCH",
           headers: {
               "Content-Type": "application/json"
@@ -49,7 +49,7 @@ function Declarations({navigation, route}) {
   }
   let deleteLike = (Id, iduser)=> {
       
-      resultat= fetch("http://192.168.1.7:5000/declarations/likedelete/"+Id+"/"+iduser+"/citoyen", {
+      resultat= fetch(colors.IP+"declarations/likedelete/"+Id+"/"+iduser+"/citoyen", {
           method: "PATCH",
           headers: {
               "Content-Type": "application/json"
@@ -75,7 +75,7 @@ function Declarations({navigation, route}) {
   }
   let deleteDislike = (Id, iduser)=> {
       
-      resultat= fetch("http://192.168.1.7:5000/declarations/dislikedelete/"+Id+"/"+iduser+"/citoyen", {
+      resultat= fetch(colors.IP+"declarations/dislikedelete/"+Id+"/"+iduser+"/citoyen", {
           method: "PATCH",
           headers: {
               "Content-Type": "application/json"
@@ -100,7 +100,7 @@ function Declarations({navigation, route}) {
   }
   let Dislike= (Id, iduser)=>{
       
-      resultat= fetch("http://192.168.1.7:5000/declarations/dislike/"+Id+"/"+iduser+"/citoyen", {
+      resultat= fetch(colors.IP+"declarations/dislike/"+Id+"/"+iduser+"/citoyen", {
           method: "PATCH",
           headers: {
               "Content-Type": "application/json"
@@ -136,17 +136,16 @@ function Declarations({navigation, route}) {
   var DISLIKES=[]
  var names=[]
  var prenoms=[]
- 
+ const [numero, setnumero]=useState(0)
   useEffect (()=>{
-      resultat= fetch("http://192.168.1.7:5000/declarations/").then(
+      resultat= fetch(colors.IP+"declarations/").then(
          response => response.json()
        ).then(
          data => {
            setBackendData(data)
-            // backendData = {...backendData, data}
-            // console.log(backendData.data.posts)
+           if(numero==0){
            data.posts.map(({userId})=>{
-            fetch("http://192.168.1.7:5000/citoyens/"+userId).then(
+            fetch(colors.IP+"citoyens/f/"+userId).then(
               response => response.json()
             ).then(
               data => {
@@ -155,18 +154,18 @@ function Declarations({navigation, route}) {
                 setBackendDataN(names)
                      
                 setBackendDataP(prenoms)
-              
+                setnumero(1)
                //console.log(userId, backendDataP, backendDataN)
               
               }
             )            
            })
          
-         }
+         }}
         )
     
   
-     }, [])
+     }, [backendData1, backendDatadislike, backendDatadeleteLike, backendDatadeleteDislike])
      
     return (
       <View style={styles.background}>

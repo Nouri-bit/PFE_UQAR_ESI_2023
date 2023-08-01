@@ -48,13 +48,13 @@ console.log(route.params.tous)
     var names=[]
     var prenoms=[]
     useEffect (()=>{
-        resultat= fetch("http://192.168.1.7:5000/forms/all").then(
+        resultat= fetch(colors.IP+"forms/all").then(
            response => response.json()
          ).then(
            data => {
              setBackendData(data)
              data.posts.map(({facilitateurId})=>{
-                fetch("http://192.168.1.7:5000/citoyens/f/"+facilitateurId).then(
+                fetch(colors.IP+"citoyens/f/"+facilitateurId).then(
                   response => response.json()
                 ).then(
                   data => {

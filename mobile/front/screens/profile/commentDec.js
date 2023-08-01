@@ -11,7 +11,7 @@ function CommentDec({navigateur, route}) {
     //console.log(route)
     let Commenter= (Id, iduser, contenu)=>{
        
-        resultat= fetch("http://192.168.1.7:5000/declarations/comment/"+Id+"/"+iduser+"/citoyen", {
+        resultat= fetch(colors.IP+"declarations/comment/"+Id+"/"+iduser+"/citoyen", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -37,12 +37,11 @@ function CommentDec({navigateur, route}) {
     }
     const [backendDataN, setBackendDataN]=useState([])
     const [backendDataP, setBackendDataP]=useState([])
-    var LIKES=[]
-    var DISLIKES=[]
+    
    var names=[]
    var prenoms=[]
     useEffect (()=>{
-        resultat= fetch("http://192.168.1.7:5000/declarations/comments/"+route.params._id).then(
+        resultat= fetch(colors.IP+"declarations/comments/"+route.params._id).then(
            response => response.json()
          ).then(
            data => {
@@ -50,7 +49,7 @@ function CommentDec({navigateur, route}) {
              //console.log(data.posts[0].commentaire)
              data.posts[0].commentaire.map(({user})=>{
                 //user="user"
-                fetch("http://192.168.1.7:5000/citoyens/%22"+user+"%22").then(
+                fetch(colors.IP+"citoyens/"+user).then(
                   response => response.json()
                 ).then(
                   data => {
@@ -67,7 +66,7 @@ function CommentDec({navigateur, route}) {
                })
            }
          )
-       }, [])
+       }, [backendDataComment])
     return (
         <View style={styles.background}>
         <Text style={styles.compte}>Commentaires</Text>

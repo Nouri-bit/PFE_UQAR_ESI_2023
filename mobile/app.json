@@ -4,10 +4,11 @@
     "slug": "mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./front/assets/applications.png",
+    "icon": "./front/assets/logo4.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "resizeMode": "contain",
+      "image": "./front/assets/logo4.png",
+      "resizeMode": "center",
       "backgroundColor": "#54CDEA"
     },
     "assetBundlePatterns": [

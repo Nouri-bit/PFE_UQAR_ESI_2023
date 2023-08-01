@@ -19,9 +19,9 @@ function PosCompliments({navigation, route}) {
     const [count, setCount] = useState(0);
       const [countD, setCountD] = useState(0);
       const [ID, setID] = useState(0);
-    let Like= (Id, iduser)=>{
+      let Like= (Id, iduser)=>{
       
-        resultat= fetch("http://192.168.1.7:5000/posts/like/"+Id+"/"+iduser+"/citoyen", {
+        resultat= fetch(colors.IP+"posts/like/"+Id+"/"+iduser+"/citoyen", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -47,7 +47,7 @@ function PosCompliments({navigation, route}) {
     }
     let deleteLike = (Id, iduser)=> {
         
-        resultat= fetch("http://192.168.1.7:5000/posts/likedelete/"+Id+"/"+iduser+"/citoyen", {
+        resultat= fetch(colors.IP+"posts/likedelete/"+Id+"/"+iduser+"/citoyen", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -73,7 +73,7 @@ function PosCompliments({navigation, route}) {
     }
     let deleteDislike = (Id, iduser)=> {
         
-        resultat= fetch("http://192.168.1.7:5000/posts/dislikedelete/"+Id+"/"+iduser+"/citoyen", {
+        resultat= fetch(colors.IP+"posts/dislikedelete/"+Id+"/"+iduser+"/citoyen", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -99,7 +99,7 @@ function PosCompliments({navigation, route}) {
     }
     let Dislike= (Id, iduser)=>{
         
-        resultat= fetch("http://192.168.1.7:5000/posts/dislike/"+Id+"/"+iduser+"/citoyen", {
+        resultat= fetch(colors.IP+"posts/dislike/"+Id+"/"+iduser+"/citoyen", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -126,6 +126,7 @@ function PosCompliments({navigation, route}) {
       console.log(resultat)
     }
     
+    
     const [liked, setLiked] = useState(false);
     const [disliked, setDisliked] = useState(false);
     const [backendData, setBackendData]=useState([{}])
@@ -140,13 +141,13 @@ function PosCompliments({navigation, route}) {
         setBackendDatadislike(null);
 	}, [])
     useEffect (()=>{
-        resultat= fetch("http://192.168.1.7:5000/posts/Compliments").then(
+        resultat= fetch(colors.IP+"posts/Compliments").then(
            response => response.json()
          ).then(
            data => {
              setBackendData(data)
              data.posts.map(({userId})=>{
-              fetch("http://192.168.1.7:5000/citoyens/"+userId).then(
+              fetch(colors.IP+"citoyens/"+userId).then(
                 response => response.json()
               ).then(
                 data => {
@@ -163,7 +164,7 @@ function PosCompliments({navigation, route}) {
              })
            }
          )
-       }, [])
+       }, [backendData1, backendDatadislike, backendDatadeleteLike, backendDatadeleteDislike])
        return (
         <View style={styles.background}>
         <Text style={styles.compte}>Home</Text>

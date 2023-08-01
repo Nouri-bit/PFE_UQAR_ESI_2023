@@ -15,7 +15,7 @@ function MapsExperience({navigation, route}) {
    const [backendData, setBackendData]=useState([{}])
  // var  backendData= {}
     useEffect (()=>{
-        resultat= fetch("http://192.168.1.7:5000/posts/Expériences").then(
+        resultat= fetch(colors.IP+"posts/Expériences").then(
            response => response.json()
          ).then(
            data => {

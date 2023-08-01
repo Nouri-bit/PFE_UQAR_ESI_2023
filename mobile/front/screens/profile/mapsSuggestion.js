@@ -15,7 +15,7 @@ function MapsSuggestion({navigation, route}) {
    const [backendData, setBackendData]=useState([{}])
  // var  backendData= {}
     useEffect (()=>{
-        resultat= fetch("http://192.168.1.7:5000/posts/Suggestions").then(
+        resultat= fetch(colors.IP+"posts/Suggestions").then(
            response => response.json()
          ).then(
            data => {

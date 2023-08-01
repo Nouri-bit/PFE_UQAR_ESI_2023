@@ -23,7 +23,7 @@ function Maps({navigation, route}) {
 
  const [dateN, setdateN] = useState('17-05-2023');
     useEffect (()=>{
-        resultat= fetch("http://192.168.1.7:5000/posts/général").then(
+        resultat= fetch(colors.IP+"posts/général").then(
            response => response.json()
          ).then(
            data => {
